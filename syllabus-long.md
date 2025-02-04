@@ -1,11 +1,5 @@
 # Syllabus
 
-## General Information
-- Class: CPSC 406 Algorithm Analysis 
-- Instructor: [Jonathan Weinberger](https://sites.google.com/view/jonathanweinberger)  
-- Lectures: TuTh 1:00 PM -- 2:15 PM / 2:30 PM -- 3:45 PM, both KC 153
-- Office Hours: TBD
-
 ## Course Description 
 
 This course has been designed to show the interplay between the theory of algorithms (specification, verification, time/space complexity) and hands-on applications to software engineering.
