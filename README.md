@@ -4,6 +4,12 @@
 The course consists of three parts on:
 Automata theory (approx. 50%), computability & complexity theory (approx. 25%), graph algorithms (approx. 25%)
 
+## General Information
+- Class: CPSC 406 Algorithm Analysis 
+- Instructor: [Jonathan Weinberger](https://sites.google.com/view/jonathanweinberger)  
+- Lectures: TuTh 1:00 PM -- 2:15 PM / 2:30 PM -- 3:45 PM, both KC 153
+- Office Hours: TBD
+
 ## Quick links
 * [Syllabus](syllabus-long.md)
 * [Participation](participation.md)
