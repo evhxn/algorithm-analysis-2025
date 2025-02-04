@@ -4,6 +4,11 @@
 The course consists of three parts on:
 Automata theory (approx. 50%), computability & complexity theory (approx. 25%), graph algorithms (approx. 25%)
 
+## Quick links
+* [Syllabus](syllabus-long.md)
+* [Participation](participation.md)
+* [Report](report.md)
+
 ## Resources
 * [J. E. Hopcroft, R. Motwani, J. D. Ullman: Introduction to Automata Theory, Languages, and Computation (ITALC)](https://archive.org/details/hopcroft-motwani-ullman-introduction-to-automata-theory-languages-and-computations-3rd-edition/)
 * [N. Deo: Graph Theory with Applications to Engineering and Computer Science (GTAECS)](https://archive.org/details/GraphTheoryWithApplicationsToEngineeringAndComputerScience/)
