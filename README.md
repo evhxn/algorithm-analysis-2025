@@ -1,4 +1,4 @@
-# Algorithm Analysis Spring 2024 (Chapman CPSC-406)
+# Algorithm Analysis Spring 2025 (Chapman CPSC-406)
 
 ## Topics
 The course consists of three parts on:
