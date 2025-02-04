@@ -2,7 +2,7 @@
 Algorithm Analysis Spring 2024 (Chapman CPSC-406)
 
 The course consists of three parts on:
-Automata theory (~50%), computability theory (~ 25%), graph algorithms (~ 25%)
+Automata theory (approx. 50%), computability theory (approx. 25%), graph algorithms (approx. 25%)
 
 | Week  | Topic                                      |
 |-------|--------------------------------------------|
