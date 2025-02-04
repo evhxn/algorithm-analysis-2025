@@ -32,7 +32,7 @@ All course materials will be made available via a git repository.
 
 Assessment will be divided into a total of 200 points.
 
-- A [project](projects.md) worth 90 points.
+- A project (TBA) worth 90 points.
 
 - [Participation](participation.md) worth 20 points.
 
