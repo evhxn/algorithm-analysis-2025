@@ -8,7 +8,9 @@ Automata theory (approx. 50%), computability & complexity theory (approx. 25%),
 * [J. E. Hopcroft, R. Motwani, J. D. Ullman: Introduction to Automata Theory, Languages, and Computation (ITALC)](https://archive.org/details/hopcroft-motwani-ullman-introduction-to-automata-theory-languages-and-computations-3rd-edition/)
 * [N. Deo: Graph Theory with Applications to Engineering and Computer Science (GTAECS)](https://archive.org/details/GraphTheoryWithApplicationsToEngineeringAndComputerScience/)
 
-## Schedule 
+## Schedule
+The following schedule is subject to some potential changes or adjustment as the course progresses.
+
 | Week  | Topic                                      |
 |-------|--------------------------------------------|
 | W1    | Introduction to automata                  |
