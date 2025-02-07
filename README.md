@@ -24,7 +24,7 @@ The following schedule is subject to some potential changes or adjustment as the
 
 | Week  | Topic                                      |
 |-------|--------------------------------------------|
-| W1    | Introduction to automata                  |
+| W1    | [Introduction to automata](https://hackmd.io/dF2SKHuSThWcmtb55siHNA)                  |
 | W2    | DFAs and NFAs: Definition and properties  |
 | W3    | Operations on automata                    |
 | W4    | Regular expressions                       |
