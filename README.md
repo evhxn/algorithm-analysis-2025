@@ -8,7 +8,9 @@ Automata theory (approx. 50%), computability & complexity theory (approx. 25%),
 - Class: CPSC 406 Algorithm Analysis 
 - Instructor: [Jonathan Weinberger](https://sites.google.com/view/jonathanweinberger), [jweinberger@chapman.edu](mailto:jweinberger@chapman.edu)
 - Lectures: TuTh 1:00 PM -- 2:15 PM / 2:30 PM -- 3:45 PM, both KC 153
-- Office Hours: TBD
+- Office Hours: Tu at N204 from 4--5:30 PM and Th at N308 from 4--5:30 PM
+
+On Thursdays, office hours will take place in Swenson N308, 4--530.
 
 ## Quick links
 * [Syllabus](syllabus-long.md)
