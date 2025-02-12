@@ -55,8 +55,7 @@ Out of a total of 200 points the report is worth 90 points and divided approxima
 - (2 points): Organization of the github repo (respecting naming conventions, etc).
 - (4 points): Organization of the report, layout, typesetting.
 - (4 points): Quality of writing, style, references.
-- (13x2=26 points): 2 points per week for timely submission of homework.
-- (13x3=39): 3 points per week for quality of homework in the full report.
+- (13x5=65 points): 5 points per quality and timely submission of the homework.
 - (12 points:) Lessons from the Group Assignments and Project.
 - (3 points): Conclusion. 
 
