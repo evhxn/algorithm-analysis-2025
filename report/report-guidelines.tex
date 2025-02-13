@@ -66,7 +66,7 @@
 \setcounter{secnumdepth}{3}  % This makes subsubsections numbered
   
 
-\title{CPSC-354 Report}
+\title{CPSC-406 Report}
 \author{Your Name  \\ Chapman University}
 
 \date{\today} 
@@ -88,7 +88,7 @@ This report will document your learning throughout the course. It will be a coll
 
 To write your own report, you start from \texttt{report.tex} which is available in the course repo. For guidance on how to do this read on and also consult \texttt{latex-example.tex} which is also available in the repo. Also check out the usual resources (Google, Stackoverflow, LLM, etc). It was never as easy as now to learn a new programming lanugage (which, btw, \LaTeX{} is).
 
-For writing \LaTeX{} with VSCode, consider using the \href{https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop}{LaTeX Workshop} extension. 
+For writing \LaTeX{} with VSCode, consider using the \href{https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop}{\LaTeX{} Workshop} extension. 
 
 There will be deadlines during the semester, graded mostly for completeness. That means that you will get the points if you submit in time and are on the right track, independently of whether the solutions are technically correct. You will have the opportunity to revise your work for the final submission of the full report.
 
@@ -131,18 +131,22 @@ Also explain what you learn from the homework. Each homework was carefully draft
 In case you want to draw automata in \LaTeX{}, you can use the tikz package. Here is an example of a simple automaton:
 
 \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
-  \node[state] (q_1)   {$q_1$}; 
+  % Define states
+  \node[state, initial] (q_1)   {$q_1$};  % q1 is now the start state
   \node[state] (q_2) [above right=of q_1] {$q_2$}; 
-  \node[state] (q_3) [below right=of q_2] {$q_3$}; 
-   \path[->] 
-   (q_1) edge  node {0} (q_2)
-         edge  node [swap] {1} (q_3)
-   (q_2) edge  node  {1} (q_3)
-         edge [loop above] node {0} ()
-   (q_3) edge [loop below] node {0,1} ();
+  \node[state, accepting] (q_3) [below right=of q_2] {$q_3$};  % q3 is now the final state
+
+  % Define transitions
+  \path[->] 
+    (q_1) edge  node {0} (q_2)
+          edge  node [swap] {1} (q_3)
+    (q_2) edge  node  {1} (q_3)
+          edge [loop above] node {0} ()
+    (q_3) edge [loop below] node {0,1} ();
+
 \end{tikzpicture}
 
-By the way, ChatGPT is quite good at outputting tikz code.
+By the way, ChatGPT is quite good at outputting tikz code. Another alternative package is xymatrix.
 
 \subsubsection{Exploration}
 
