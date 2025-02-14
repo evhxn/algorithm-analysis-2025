@@ -16,10 +16,12 @@ On Thursdays, office hours will take place in Swenson N308, 4--530.
 * [Syllabus](syllabus-long.md)
 * [Participation](participation.md)
 * [Report](report.md)
+* [Git best practices](git-best-practices.md)
 
 ## Resources
 * [J. E. Hopcroft, R. Motwani, J. D. Ullman: Introduction to Automata Theory, Languages, and Computation (ITALC)](https://archive.org/details/hopcroft-motwani-ullman-introduction-to-automata-theory-languages-and-computations-3rd-edition/)
 * [N. Deo: Graph Theory with Applications to Engineering and Computer Science (GTAECS)](https://archive.org/details/GraphTheoryWithApplicationsToEngineeringAndComputerScience/)
+
 
 ## Schedule
 The following schedule is subject to some potential changes or adjustment as the course progresses.
