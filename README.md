@@ -17,6 +17,7 @@ On Thursdays, office hours will take place in Swenson N308, 4--530.
 * [Participation](participation.md)
 * [Report](report.md)
 * [Git best practices](git-best-practices.md)
+* [Resources for participation](https://hackmd.io/@jweinberger/H1gkQyZQ1l)
 
 ## Resources
 * [J. E. Hopcroft, R. Motwani, J. D. Ullman: Introduction to Automata Theory, Languages, and Computation (ITALC)](https://archive.org/details/hopcroft-motwani-ullman-introduction-to-automata-theory-languages-and-computations-3rd-edition/)
