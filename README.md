@@ -17,6 +17,8 @@ On Thursdays, office hours will take place in Swenson N308, 4--530.
 * [Participation](participation.md)
 * [Report](report.md)
 * [Git best practices](git-best-practices.md)
+* [Top 12 Git commands every developer must know](https://github.blog/developer-skills/github/top-12-git-commands-every-developer-must-know/)
+* [Resources for participation](https://hackmd.io/@jweinberger/H1gkQyZQ1l)
 
 ## Resources
 * [J. E. Hopcroft, R. Motwani, J. D. Ullman: Introduction to Automata Theory, Languages, and Computation (ITALC)](https://archive.org/details/hopcroft-motwani-ullman-introduction-to-automata-theory-languages-and-computations-3rd-edition/)
@@ -29,9 +31,9 @@ The following schedule is subject to some potential changes or adjustment as the
 | Week  | Topic                                      |
 |-------|--------------------------------------------|
 | W1    | [Introduction to automata](https://hackmd.io/dF2SKHuSThWcmtb55siHNA)                  |
-| W2    | [DFAs and NFAs: Definition and properties](https://hackmd.io/B12ryxVpRZWjGOlXU93-Yw?both), [Programming (with) automata](https://hackmd.io/gY5RW5z2RmeIC4VApkJPlA?view)  |
-| W3    | Operations on automata                    |
-| W4    | Regular expressions                       |
+| W2    | [DFAs: Definition and properties](https://hackmd.io/B12ryxVpRZWjGOlXU93-Yw?both), [Programming (with) automata](https://hackmd.io/gY5RW5z2RmeIC4VApkJPlA?view)  |
+| W3    |  Operations on automata                    |
+| W4    | NFAs and regular expressions                |
 | W5    | Minimization I                            |
 | W6    | Minimization II                           |
 | W7    | Pumping Lemma                             |
