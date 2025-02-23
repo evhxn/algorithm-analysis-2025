@@ -13,10 +13,31 @@ def generate_words():
 def __main__() :
     
     # todo: instantiate accordingly
-    A1 = dfa.DFA(...)
+    A1 = dfa.DFA(
+        Q={1, 2, 3, 4},
+        Sigma={'a', 'b'},
+        delta={
+            (1, 'a'): 2, (1, 'b'): 4,
+            (2, 'a'): 2, (2, 'b'): 3,
+            (3, 'a'): 4, (3, 'b'): 4,
+            (4, 'a'): 4, (4, 'b'): 4
+        },
+        q0=1,
+        F={3}
+    )
     
     # todo: instantiate accordingly
-    A2 = dfa.DFA(...)
+    A2 = dfa.DFA(
+        Q={1, 2, 3},
+        Sigma={'a', 'b'},
+        delta={
+            (1, 'a'): 2, (1, 'b'): 1,
+            (2, 'a'): 3, (2, 'b'): 1,
+            (3, 'a'): 3, (3, 'b'): 2
+        },
+        q0=1,
+        F={3}
+    )
     
     words = generate_words()
     automata = [A1, A2]
