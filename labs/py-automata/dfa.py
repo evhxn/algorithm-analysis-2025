@@ -20,6 +20,15 @@ class DFA :
     # modify as needed
     def run(self, w) :
         # todo
-        return False
+        # Start at initial state
+        current_state = self.q0
+        for symbol in w:
+            if (current_state, symbol) in self.delta:
+                current_state = self.delta[(current_state, symbol)]
+            else:
+                # Invalid transition (dead state)
+                return False
+            # Accept if in final state
+        return current_state in self.F 
         
 
