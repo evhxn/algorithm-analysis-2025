@@ -1,4 +1,4 @@
-# Algorithm Analysis Spring 2025 (Chapman CPSC-406)
+# Algorithm Analysis, Spring 2025 (Chapman CPSC-406)
 
 ## Topics
 The course consists of three parts on:
@@ -33,7 +33,7 @@ The following schedule is subject to some potential changes or adjustment as the
 | W1    | [Introduction to automata](https://hackmd.io/dF2SKHuSThWcmtb55siHNA)                  |
 | W2    | [DFAs: Definition and properties](https://hackmd.io/B12ryxVpRZWjGOlXU93-Yw?both), [Programming (with) automata](https://hackmd.io/gY5RW5z2RmeIC4VApkJPlA?view)  |
 | W3    |  [Operations on automata](https://hackmd.io/ADmhnzv8QQm41mk1eytP8g?view)                   |
-| W4    | NFAs                |
+| W4    | [Extended transition function](https://hackmd.io/7PQmGrkfTquROvEdM28FvA?both) and NFAs                |
 | W5    | Regular expressions                            |
 | W6    | Minimization                           |
 | W7    | Pumping Lemma                             |
