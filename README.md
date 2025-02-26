@@ -32,10 +32,10 @@ The following schedule is subject to some potential changes or adjustment as the
 |-------|--------------------------------------------|
 | W1    | [Introduction to automata](https://hackmd.io/dF2SKHuSThWcmtb55siHNA)                  |
 | W2    | [DFAs: Definition and properties](https://hackmd.io/B12ryxVpRZWjGOlXU93-Yw?both), [Programming (with) automata](https://hackmd.io/gY5RW5z2RmeIC4VApkJPlA?view)  |
-| W3    |  Operations on automata                    |
-| W4    | NFAs and regular expressions                |
-| W5    | Minimization I                            |
-| W6    | Minimization II                           |
+| W3    |  [Operations on automata](Homework 3 is now online)                    |
+| W4    | NFAs                |
+| W5    | Regular expressions                            |
+| W6    | Minimization                           |
 | W7    | Pumping Lemma                             |
 |       | **Spring Break**                          |
 | W8    | Computability, Turing machines, (un)decidability |
