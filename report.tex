@@ -75,6 +75,7 @@
 \maketitle
 
 \begin{abstract}
+TBW
 \end{abstract}
 
 \setcounter{tocdepth}{3}
@@ -210,7 +211,9 @@ Finite automata prove to be useful for detecting logical flaws in transaction sy
 \subsection{Week 3}
 \textbf{Lecture Summary}\\
 %Summarize when I get the chance
-\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip
+TBW\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip
+
+
 
 {\textbf{{Homework 2}}}\\
 \textbf{Exercise 2: Implementing DFA Runs}\\
@@ -461,8 +464,340 @@ F &= \{\,q_3\}.
 \item $q_2$ - we matched \texttt{01}
 \item $q_3$ (accepting) - we found \texttt{011} somewhere in the string
 \end{itemize}
+\bigskip
 
+\subsection{\textbf{Week 4}}\\
+\textbf{Lecture Summary}\\
+%Summarize when I get the chance
+We explore the concept of \emph{product automata} and how they can be used to model operations on languages accepted by two deterministic finite automata (DFAs). In particular, we discuss how to construct an automaton that accepts the intersection (or union) of the languages recognized by two given automata.
 
+\textbf{Homework 3}
+
+\textbf{Problem 1: Extended transition function}\\
+Consider two DFAs:
+\[
+\mathcal{A}^{(1)} = \big(Q^{(1)}, \Sigma, \delta^{(1)}, q_0^{(1)}, F^{(1)}\big) \quad \text{and} \quad \mathcal{A}^{(2)} = \big(Q^{(2)}, \Sigma, \delta^{(2)}, q_0^{(2)}, F^{(2)}\big),
+\] 
+\\over the alphabet $\Sigma = \{a, b\}$.
+\begin{center}
+\begin{tikzpicture}[>=stealth,node distance=2.5cm,on grid,auto]
+\tikzstyle{state}=[circle,draw,minimum size=8mm,inner sep=0pt]
+
+  %--- nodes ---
+  \node[state, initial] (1) {1};
+  \node[state, accepting] (2) [right=3cm of 1, yshift=0.8cm] {2};
+  \node[state, accepting] (4) [right=3cm of 1, yshift=-0.8cm] {4};
+  \node[state] (3) [right=3cm of 2] {3};
+
+  %--- transitions ---
+  \path[->]
+    (1) edge[bend left=10] node[above] {a} (2)
+    (1) edge[bend right=10] node[below] {b} (4)
+
+    (2) edge[bend left=10] node[above] {b} (4)
+    (2) edge[bend right=10] node[below] {a} (3)
+
+    (4) edge[bend left=10] node[above] {a} (2)
+    (4) edge[bend right=10] node[below] {b} (3)
+
+    (3) edge[loop right] node {a,b} (3);
+\end{tikzpicture}
+\end{center}
+
+\noindent
+\textit{Diagram for \(A^{(1)}\):}
+\begin{itemize}
+  \item State 1 is the initial state (arrow from the left).
+  \item From state 1: reading `\(a\)' goes to 2; reading `\(b\)' goes to 4.
+  \item From state 2: reading `\(a\)' goes to 3; reading `\(b\)' goes to 4.
+  \item From state 4: reading `\(a\)' goes to 2; reading `\(b\)' goes to 3.
+  \item From state 3: reading either `\(a\)' or `\(b\)' loops on 3.
+  \item States 2 and 4 are accepting, while state 3 is a non-accepting sink.
+\end{itemize}
+
+\bigskip
+
+\begin{center}
+\begin{tikzpicture}[>=stealth,node distance=2.5cm,on grid,auto]
+\tikzstyle{state}=[circle,draw,minimum size=8mm,inner sep=0pt]
+
+%--- nodes ---
+\node[state, initial] (1) {1};
+\node[state, accepting] (2) [right=3cm of 1] {2};
+\node[state] (3) [below=2cm of 2] {3};
+
+%--- initial arrow ---
+\path[->] 
+  node[above left=0.5cm of 1]{}
+  (1);
+
+%--- transitions ---
+\path[->]
+  (1) edge[bend left=15] node[above] {a} (2)
+  (1) edge[bend right=15] node[left,pos=0.6] {b} (3)
+  (2) edge[bend left=15] node[below] {a, b} (1)
+  (3) edge[loop below] node {a,b} (3);
+
+\end{tikzpicture}
+\end{center}
+
+\noindent
+\textit{Diagram for \(A^{(2)}\):}
+\begin{itemize}
+  \item State 1 is the initial state (arrow from the left).
+  \item From state 1: reading `\(a\)' goes to 2; reading `\(b\)' goes to 3.
+  \item From state 2: reading `\(a\)' or `\(b\)' goes back to 1.
+  \item State 3 loops on both `\(a\)' and `\(b\)'.
+  \item State 2 is the only accepting state.
+\end{itemize}
+
+\textbf{a. Descriptions of Accepted Languages}
+
+\begin{itemize}
+    \item \textbf{$\mathcal{A}^{(1)}$:} Accepts non-empty words in which no two consecutive letters are the same.
+    \item \textbf{$\mathcal{A}^{(2)}$:} Accepts words of odd length where every letter at an odd position of $w$ is the letter $a$.
+\end{itemize}
+Hence,
+\[
+L\bigl(A^{(2)}\bigr)
+=\bigl\{\,w \in \{a,b\}^* \,\mid\, |w|\text{ is odd and the odd-indexed letters are all }a\bigr\}.
+\]
+
+\bigskip
+
+\textbf{b. Computation: $\widehat{\delta}^{(1)}\bigl(1,\texttt{abaa}\bigr)$}
+
+The automaton $A^{(1)}$ has states $\{1,2,3,4\}$, where:
+\begin{itemize}
+    \item State 1 is the initial state (non-final).
+    \item State 2 indicates the last letter read was $a$ (no violation).
+    \item State 4 indicates the last letter read was $b$ (no violation).
+    \item State 3 is the ``sink'' or ``trap'' state (once a violation occurs, e.g.\ two consecutive letters the same).
+\end{itemize}
+We compute step-by-step for the input \(\texttt{abaa}\):
+\[
+\widehat{\delta}^{(1)}(1,\texttt{abaa}):
+\]
+\begin{enumerate}
+    \item Start in state $1$, input = \texttt{abaa}.
+    \item Read `a': $\delta^{(1)}(1,a) = 2$. Remaining input = \texttt{baa}.
+    \item Now in state $2$, read `b': $\delta^{(1)}(2,b) = 4$. Remaining input = \texttt{aa}.
+    \item Now in state $4$, read `a': $\delta^{(1)}(4,a) = 2$. Remaining input = \texttt{a}.
+    \item Now in state $2$, read `a': $\delta^{(1)}(2,a) = 3$. Remaining input is empty.
+\end{enumerate}
+Therefore,
+\[
+\widehat{\delta}^{(1)}(1,\texttt{abaa}) \;=\; 3.
+\]
+Since state $3$ is the non-accepting sink, the string \texttt{abaa} is not accepted by $A^{(1)}$.
+
+\bigskip
+
+\textbf{b. Computation: $\widehat{\delta}^{(2)}\bigl(1,\texttt{abba}\bigr)$}
+
+Automaton $A^{(2)}$ can be thought of as having states:
+\begin{itemize}
+    \item State 1: an even number of letters read so far (initial, non-final).
+    \item State 2: an odd number of letters read so far, with ``odd positions must be $a$'' still satisfied (accepting).
+    \item State 3: dead/trap state (if the condition on odd positions is violated).
+\end{itemize}
+We compute for \(\texttt{abba}\) (positions are 1,2,3,4):
+\[
+\widehat{\delta}^{(2)}(1,\texttt{abba}):
+\]
+\begin{enumerate}
+    \item Start in state $1$, input = \texttt{abba}.
+    \item Read `a' (position 1): $\delta^{(2)}(1,a) = 2$. Remaining input = \texttt{bba}.
+    \item Now in state $2$, read `b' (position 2): $\delta^{(2)}(2,b) = 1$. Remaining input = \texttt{ba}.
+    \item Now in state $1$, read `b' (position 3): $\delta^{(2)}(1,b) = 3$. Remaining input = \texttt{a}.
+    \item Now in state $3$, read `a': $\delta^{(2)}(3,a) = 3$. Remaining input is empty.
+\end{enumerate}
+Hence,
+\[
+\widehat{\delta}^{(2)}(1,\texttt{abba}) = 3,
+\]
+and state $3$ is non-accepting. Therefore, \texttt{abba} is not accepted by $A^{(2)}$.
+
+\bigskip
+
+\textbf{Problem 2: Product automata}
+
+We now define a \emph{product automaton} $A$ from $A^{(1)}$ and $A^{(2)}$ in order to recognize 
+\[
+L\bigl(A^{(1)}\bigr) \;\cap\; L\bigl(A^{(2)}\bigr).
+\]
+
+\subsubsection*{a. Construct the intersection automaton $A$}
+
+\noindent \textbf{States.} The state set of $A$ is the Cartesian product
+\[
+Q \;=\; Q^{(1)} \;\times\; Q^{(2)}.
+\]
+If $Q^{(1)} = \{1,2,3,4\}$ and $Q^{(2)} = \{1,2,3\}$, then
+\[
+Q = \{(1,1),(1,2),(1,3),(2,1),(2,2),(2,3),(3,1),(3,2),(3,3),(4,1),(4,2),(4,3)\}.
+\]
+
+\noindent \textbf{Initial state.} $(1,1)$, since $1$ is the initial state of $A^{(1)}$ and $1$ is the initial state of $A^{(2)}$.
+
+\noindent \textbf{Transition function.} For $(p,q)\in Q$ and $x \in \{a,b\}$,
+\[
+\delta\bigl((p,q),x\bigr) \;=\; \bigl(\delta^{(1)}(p,x),\;\delta^{(2)}(q,x)\bigr).
+\]
+
+\noindent \textbf{Final states (for intersection).} A pair $(p,q)$ is final if $p \in F^{(1)}$ and $q \in F^{(2)}$. 
+- For $A^{(1)}$, we have $F^{(1)} = \{2,4\}$ (all non-empty strings with no two consecutive letters the same).  
+- For $A^{(2)}$, we have $F^{(2)} = \{2\}$ (odd-length strings with \(a\) in every odd position).
+
+Thus
+\[
+F \;=\; \{(p,q) \mid p \in \{2,4\},\, q = 2\}.
+\]
+
+\paragraph{Diagram of product automaton $A$}showing all transitions. For brevity, not every state is drawn if some are unreachable.
+
+\begin{center}
+\begin{tikzpicture}[>=stealth,node distance=2.7cm,on grid,auto]
+\tikzstyle{state}=[circle,draw,minimum size=8mm,inner sep=0pt]
+
+%-- Nodes that are reachable only  --
+\node[state, initial] (11) {(1,1)};
+\node[state, accepting] (22) [right of=11] {(2,2)};
+\node[state] (43) [right of=22] {(4,3)};
+\node[state] (31) [below of=11] {(3,1)};
+\node[state] (41) [below of=22] {(4,1)};
+\node[state] (23) [below of=43] {(2,3)};
+\node[state] (32) [below of=31] {(3,2)};
+\node[state] (33) [below of=41, xshift=1.3cm] {(3,3)};
+
+%-- Transitions --
+\path[->]
+  % (1,1)
+  (11) edge node {a} (22)
+  (11) edge node {b} (43)
+
+  % (2,2)
+  (22) edge[bend left=12] node {a} (31)
+  (22) edge[bend right=12] node {b} (41)
+
+  % (4,3)
+  (43) edge[bend left=12] node {a} (23)
+  (43) edge[bend right=12] node {b} (33)
+
+  % (3,1)
+  (31) edge[bend left=12] node {a} (32)
+  (31) edge[bend right=12] node {b} (33)
+
+  % (4,1)
+  (41) edge[bend left=12] node {a} (22)
+  (41) edge[bend right=12] node {b} (33)
+
+  % (2,3)
+  (23) edge[bend left=12] node {a} (33)
+  (23) edge[bend right=12] node {b} (43)
+
+  % (3,2)
+  (32) edge[bend left=12] node {a,b} (31)
+
+  % (3,3)
+  (33) edge[loop right] node {a,b} (33);
+
+\end{tikzpicture}
+\end{center}
+
+\subsubsection*{b. Why $L(A) = L\bigl(A^{(1)}\bigr)\,\cap\,L\bigl(A^{(2)}\bigr)$}
+
+A string $w$ is accepted by $A$ precisely if:
+\begin{itemize}
+    \item Following the transitions of $A$ on $w$ leads from $(1,1)$ to a final state $(p,q)$.
+    \item This happens exactly when $p$ is a final state of $A^{(1)}$ \emph{and} $q$ is a final state of $A^{(2)}$.
+\end{itemize}
+Thus $w$ is accepted by both $A^{(1)}$ and $A^{(2)}$. Hence $L(A) = L(A^{(1)}) \cap L(A^{(2)})$.
+
+\subsubsection*{c. Constructing $A'$ for the Union}
+
+To get $L(A') = L\bigl(A^{(1)}\bigr) \cup L\bigl(A^{(2)}\bigr)$, we keep the same product structure but change the final states. A product state $(p,q)$ is final if \emph{either} $p \in F^{(1)}$ \emph{or} $q \in F^{(2)}$. Formally:
+\[
+F' \;=\; \bigl(F^{(1)} \times Q^{(2)}\bigr) \;\cup\;\bigl(Q^{(1)} \times F^{(2)}\bigr).
+\]
+This ensures that a string is accepted by $A'$ if it is accepted by $A^{(1)}$ \emph{or} $A^{(2)}$.
+
+\bigskip
+
+\noindent \textbf{Summary of Key Points:}
+\begin{itemize}
+    \item For $A^{(1)}$, the accepting states are $\{2,4\}$; consecutive letters must differ and the string must be non-empty.
+    \item For $A^{(2)}$, the accepting state is $\{2\}$; the string must have odd length and $a$ in every odd position.
+    \item Extended transitions showed that $\widehat{\delta}^{(1)}(1,\texttt{abaa}) = 3$ (not accepted) and $\widehat{\delta}^{(2)}(1,\texttt{abba}) = 3$ (not accepted).
+    \item The product automaton for intersection has final states $F^{(1)} \times F^{(2)} = \{(2,2), (4,2)\}$, while for union we use $F' = (F^{(1)} \times Q^{(2)}) \;\cup\; (Q^{(1)} \times F^{(2)})$.
+\end{itemize}
+\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip
+
+\textbf{Exercise 2.2.7: Induction Proof}
+
+\noindent
+\textbf{Statement:} Let $A$ be a DFA, and let $q$ be a particular state of $A$ such that
+\[
+\delta(q,a) \;=\; q
+\quad
+\text{for all input symbols } a.
+\]
+Show by induction on the length of the input that for all input strings $w$, we have
+\[
+\widehat{\delta}(q,w) \;=\; q.
+\]
+
+\bigskip
+
+\noindent
+\textbf{Proof (by induction on the length of $w$):}
+
+\paragraph{Base Case ($|w| = 0$):}
+If $w$ is the empty string $\epsilon$, then by definition of the extended transition function,
+\[
+\widehat{\delta}(q,\epsilon) \;=\; q.
+\]
+Hence the statement holds for $|w| = 0$.
+
+\paragraph{Inductive Step:}
+Assume that for all strings $x$ of length $n$, we have
+\[
+\widehat{\delta}(q,x) \;=\; q.
+\]
+We need to prove the statement for any string $w$ of length $n+1$. Let $w$ be such a string. We can write $w$ as
+\[
+w \;=\; x\,a,
+\]
+where $x$ is a string of length $n$, and $a$ is a single input symbol. Then,
+\[
+\widehat{\delta}(q,w)
+\;=\;
+\widehat{\delta}(q,\,x\,a)
+\;=\;
+\delta\bigl(\widehat{\delta}(q,x),\,a\bigr).
+\]
+By the inductive hypothesis, $\widehat{\delta}(q,x) = q$. Therefore,
+\[
+\widehat{\delta}(q,w)
+\;=\;
+\delta(q,a).
+\]
+But we are given that $\delta(q,a) = q$ for all symbols $a$. Hence,
+\[
+\widehat{\delta}(q,w)
+\;=\;
+q.
+\]
+This completes the inductive step.
+
+\paragraph{Conclusion:}
+By the principle of mathematical induction, for all strings $w$, we have
+\[
+\widehat{\delta}(q,w) = q.
+\]
+Thus, if a state $q$ transitions to itself on every symbol, it remains $q$ under any input string.
+\paragraph{ITALC 2.3 Question:}
+In the subset construction for converting an NFA to a DFA, often there is an exponential blow-up in the number of states. Can you propose a scenario for which this blow-up actually happens, and whether there are any strategies or special cases that might mitigate this worst-case behavior?
 \end{document}
 
 
