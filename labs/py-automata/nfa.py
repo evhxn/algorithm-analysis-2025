@@ -12,7 +12,7 @@ class NFA :
    
    # print the data of the NFA
     def __repr__(self) :
-        return f"DFA({self.Q},\n\t{self.Sigma},\n\t{self.delta},\n\t{self.q0},\n\t{self.F})"
+        return f"NFA({self.Q},\n\t{self.Sigma},\n\t{self.delta},\n\t{self.q0},\n\t{self.F})"
 
     # run the NFA on the word w
     # return if the word is accepted or not
