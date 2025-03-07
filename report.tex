@@ -75,7 +75,7 @@
 \maketitle
 
 \begin{abstract}
-TBW
+TBD
 \end{abstract}
 
 \setcounter{tocdepth}{3}
@@ -211,7 +211,7 @@ Finite automata prove to be useful for detecting logical flaws in transaction sy
 \subsection{Week 3}
 \textbf{Lecture Summary}\\
 %Summarize when I get the chance
-TBW\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip
+TBD\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip
 
 
 
@@ -798,6 +798,186 @@ By the principle of mathematical induction, for all strings $w$, we have
 Thus, if a state $q$ transitions to itself on every symbol, it remains $q$ under any input string.
 \paragraph{ITALC 2.3 Question:}
 In the subset construction for converting an NFA to a DFA, often there is an exponential blow-up in the number of states. Can you propose a scenario for which this blow-up actually happens, and whether there are any strategies or special cases that might mitigate this worst-case behavior?
+
+\subsection{\textbf{Week 5}}\\
+\textbf{Lecture Summary}\\
+%Summarize when I get the chance
+TBD
+
+\textbf{Homework 4}\\
+\textbf{Problem 1: NFA Interpretation}
+We can consider $A$ as an NFA because each transition goes to a 
+single-element set (instead of exactly one state). Hence, $A$ 
+can be viewed as a valid NFA.
+
+\[
+A' = \bigl(Q', \Sigma, \delta', q'_0, F'\bigr),
+\]
+where
+\[
+Q' = Q, 
+\quad
+q'_0 = q_0, 
+\quad
+F' = F,
+\quad
+\delta'(q,a) = \{\delta(q,a)\}.
+\]
+
+\textbf{2. Why it works.}
+
+Each string accepted by $A$ has the exact same single path of states 
+in $A'$, because $\delta'$ uses the same transitions as $\delta$, 
+but returns them as singleton sets. 
+Thus, every string accepted by $A'$ follows that same single path of 
+states in $A$. Consequently,
+\[
+L(A') \;=\; L(A).
+\]
+
+\textbf{Problem 2: }
+The NFA $A$ has four states $q_0, q_1, q_2, q_3$, with $q_0$ as the 
+start state and $q_3$ as the (only) accepting state. The transitions are:
+\[
+\delta(q_0,0) = \{q_1\}, \quad
+\delta(q_0,1) = \{q_1\},
+\]
+\[
+\delta(q_1,0) = \{q_2\}, \quad
+\delta(q_1,1) = \{q_2, q_3\},
+\]
+\[
+\delta(q_2,0) = \varnothing, \quad
+\delta(q_2,1) = \{q_3\},
+\]
+\[
+\delta(q_3,0) = \varnothing, \quad
+\delta(q_3,1) = \varnothing.
+\]
+
+There are no loops, so only strings of length $2$ or $3$ can reach $q_3$. 
+Specifically:
+\begin{itemize}
+\item For length $2$: 
+  \[
+    q_0 \xrightarrow{\,0\text{ or }1\,} q_1 
+    \xrightarrow{\,1\,} q_3,
+  \]
+  which corresponds to the strings $\{01,\,11\}$.
+\item For length $3$:
+  \[
+    q_0 \xrightarrow{\,0\text{ or }1\,} q_1
+    \xrightarrow{\,0\text{ or }1\,} q_2
+    \xrightarrow{\,1\,} q_3,
+  \]
+  which corresponds to the strings $\{001,\,011,\,101,\,111\}$.
+\end{itemize}
+
+Hence, the language is:
+\[
+L(A) \;=\; \{\,01,\,11,\,001,\,011,\,101,\,111\}.
+\]
+
+\subsection*{2. Specify $A$ in the form $(Q,\Sigma,\delta,q_0,F)$}
+
+\[
+Q = \{q_0,\, q_1,\, q_2,\, q_3\}, \quad
+\Sigma = \{0,1\}, \quad
+q_0 \text{ is the start state}, \quad
+F = \{q_3\}.
+\]
+The transition function $\delta$ is as above.
+
+\subsection*{3. Compute $\hat{\delta}\bigl(q_0,\,10110\bigr)$ step by step}
+
+We track the set of possible states after each input symbol:
+
+\begin{enumerate}
+\item Start: $\{q_0\}$.
+\item Read `1`: $\delta(q_0,1) = \{q_1\}$, so now in $\{q_1\}$.
+\item Read `0`: $\delta(q_1,0) = \{q_2\}$, so now in $\{q_2\}$.
+\item Read `1`: $\delta(q_2,1) = \{q_3\}$, so now in $\{q_3\}$.
+\item Read `1`: $\delta(q_3,1) = \varnothing$, so now in $\varnothing$.
+\item Read `0`: from $\varnothing$, we stay in $\varnothing$.
+\end{enumerate}
+
+Thus,
+\[
+\hat{\delta}(q_0,\,10110) \;=\; \varnothing.
+\]
+Since $\varnothing$ does not contain a final state, $10110$ is not accepted.
+
+\subsection*{4. Find all paths in $A$ for $v = 1$ and $w = 1010$}
+
+\paragraph{For $v = 1$:}
+\[
+q_0 \xrightarrow{\,1\,} q_1.
+\]
+No more input; we end in $q_1$. Since $q_1 \notin F$, the string $1$ is 
+not accepted.
+
+\paragraph{For $w = 1010$:}
+\[
+q_0 \xrightarrow{\,1\,} q_1 
+\xrightarrow{\,0\,} q_2 
+\xrightarrow{\,1\,} q_3 
+\xrightarrow{\,0\,} \varnothing.
+\]
+We end in $\varnothing$, so $1010$ is not accepted. 
+In both cases, there is a unique path because the transitions 
+are forced by the input symbols.
+
+\subsection*{5. Construct the determinization $A^D$ (power-set construction)}
+
+We list the reachable subsets of $\{q_0, q_1, q_2, q_3\}$:
+
+\begin{itemize}
+\item \textbf{Start state}: $\{q_0\}$. 
+  \begin{itemize}
+  \item On $0$ or $1$, go to $\{q_1\}$.
+  \end{itemize}
+\item \textbf{State} $\{q_1\}$.
+  \begin{itemize}
+  \item On $0$: $\{q_2\}$.
+  \item On $1$: $\{q_2,q_3\}$.
+  \end{itemize}
+\item \textbf{State} $\{q_2\}$.
+  \begin{itemize}
+  \item On $0$: $\varnothing$.
+  \item On $1$: $\{q_3\}$.
+  \end{itemize}
+\item \textbf{State} $\{q_2,q_3\}$.
+  \begin{itemize}
+  \item On $0$: $\varnothing$.
+  \item On $1$: $\{q_3\}$.
+  \end{itemize}
+\item \textbf{State} $\{q_3\}$.
+  \begin{itemize}
+  \item On $0$: $\varnothing$.
+  \item On $1$: $\varnothing$.
+  \end{itemize}
+\item \textbf{Dead state} $\varnothing$.
+  \begin{itemize}
+  \item On $0$ or $1$: $\varnothing$.
+  \end{itemize}
+\end{itemize}
+
+The start state in the DFA is $\{q_0\}$, and the accepting states are 
+all subsets containing $q_3$, namely $\{q_2,q_3\}$ and $\{q_3\}$.
+
+\subsection*{6. Verify $L(A) = L(A^D)$. Is there a smaller DFA?}
+
+By the standard subset construction, we have $L(A^D) = L(A)$. 
+Since $L(A)$ is the finite set of strings $\{01,\,11,\,001,\,011,\,101,\,111\}$, 
+one might suspect a smaller DFA could exist. However, standard DFA 
+minimization shows that all the reachable states in $A^D$ are pairwise 
+inequivalent, so no merges are possible without altering the language. 
+Hence, the $6$-state DFA is already minimal.
+
+\textbf{Question:} Can you describe a practical scenario where combining the two (i.e  first designing an NFA and then converting or integrating it into a DFA) provides benefits that neither approach alone can normally offer?
+
+
+
 \end{document}
 
 
