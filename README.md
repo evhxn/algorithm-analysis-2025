@@ -36,7 +36,7 @@ The following schedule is subject to some potential changes or adjustment as the
 | W4    | [Extended transition function](https://hackmd.io/7PQmGrkfTquROvEdM28FvA?both), [NFAs](https://hackmd.io/dDaFPm6hRUCpxr9OTEVJUw?view)      and [Determinization](https://hackmd.io/4rNUYyG4QEWsrtl3yx_t1g?view)          |
 | W5    | [Regular expressions](https://hackmd.io/6kHUD_8cS22gzrvfmUiFDA?view) and [Programming Assignment 1](https://hackmd.io/HHl2MFR0Tk2a7eMRO3Bi5w?view)                           |
 | W6    | Minimization                           |
-| W7    | Pumping Lemma                             |
+| W7    | [Pumping Lemma](https://hackmd.io/_nZMlo6eT9m2pm9gesUjDA)                             |
 |       | **Spring Break**                          |
 | W8    | Computability, Turing machines, (un)decidability |
 | W9    | Algorithm complexity & Big O              |
