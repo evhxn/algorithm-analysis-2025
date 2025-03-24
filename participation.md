@@ -2,7 +2,7 @@
 
 Participation is activity by students that helps to improve the course. 
 
-In total, there are 10 participation points that can be obtained through a combination of the following activties. Each of these activities is worth 2 points:
+In total, there are 20 participation points that can be obtained through a combination of the following activties. Each of these activities is worth 2 points:
 
 - Attending a Fowler School of Engineering Seminar.[^seminars]
 - Attending office hours with an interesting question.
