@@ -835,7 +835,7 @@ states in $A$. Consequently,
 L(A') \;=\; L(A).
 \]
 
-\textbf{Problem 2: }
+\textbf{Problem 2:}
 The NFA $A$ has four states $q_0, q_1, q_2, q_3$, with $q_0$ as the 
 start state and $q_3$ as the (only) accepting state. The transitions are:
 \[
@@ -878,7 +878,7 @@ Hence, the language is:
 L(A) \;=\; \{\,01,\,11,\,001,\,011,\,101,\,111\}.
 \]
 
-\subsection*{2. Specify $A$ in the form $(Q,\Sigma,\delta,q_0,F)$}
+\textbf{2. Specify $A$ in the form $(Q,\Sigma,\delta,q_0,F)$}
 
 \[
 Q = \{q_0,\, q_1,\, q_2,\, q_3\}, \quad
@@ -888,7 +888,7 @@ F = \{q_3\}.
 \]
 The transition function $\delta$ is as above.
 
-\subsection*{3. Compute $\hat{\delta}\bigl(q_0,\,10110\bigr)$ step by step}
+\textbf{3. Compute $\hat{\delta}\bigl(q_0,\,10110\bigr)$ step by step}
 
 We track the set of possible states after each input symbol:
 
@@ -907,7 +907,7 @@ Thus,
 \]
 Since $\varnothing$ does not contain a final state, $10110$ is not accepted.
 
-\subsection*{4. Find all paths in $A$ for $v = 1$ and $w = 1010$}
+\textbf{4. Find all paths in $A$ for $v = 1$ and $w = 1010$}
 
 \paragraph{For $v = 1$:}
 \[
@@ -927,7 +927,7 @@ We end in $\varnothing$, so $1010$ is not accepted.
 In both cases, there is a unique path because the transitions 
 are forced by the input symbols.
 
-\subsection*{5. Construct the determinization $A^D$ (power-set construction)}
+\textbf{5. Construct the determinization $A^D$ (power-set construction)}
 
 We list the reachable subsets of $\{q_0, q_1, q_2, q_3\}$:
 
@@ -965,7 +965,7 @@ We list the reachable subsets of $\{q_0, q_1, q_2, q_3\}$:
 The start state in the DFA is $\{q_0\}$, and the accepting states are 
 all subsets containing $q_3$, namely $\{q_2,q_3\}$ and $\{q_3\}$.
 
-\subsection*{6. Verify $L(A) = L(A^D)$. Is there a smaller DFA?}
+\textbf{6. Verify $L(A) = L(A^D)$. Is there a smaller DFA?}
 
 By the standard subset construction, we have $L(A^D) = L(A)$. 
 Since $L(A)$ is the finite set of strings $\{01,\,11,\,001,\,011,\,101,\,111\}$, 
@@ -975,6 +975,266 @@ inequivalent, so no merges are possible without altering the language.
 Hence, the $6$-state DFA is already minimal.
 
 \textbf{Question:} Can you describe a practical scenario where combining the two (i.e  first designing an NFA and then converting or integrating it into a DFA) provides benefits that neither approach alone can normally offer?
+
+\subsection{\textbf{Week 6}}\\
+\textbf{Lecture Summary}\\
+%Summarize when I get the chance
+TBD
+
+\textbf{Homework 5}\\
+\textbf{Exercise 3.2.1: Determinization of an NFA}
+
+Consider an NFA 
+\[
+N = (Q,\Sigma,\delta,q_0,F),
+\]
+where 
+\begin{itemize}
+    \item \(Q\) is the set of states,
+    \item \(\Sigma\) is the alphabet,
+    \item \(\delta : Q \times \Sigma \to \mathcal{P}(Q)\) is the transition function,
+    \item \(q_0\) is the initial state, and
+    \item \(F \subseteq Q\) is the set of final (accepting) states.
+\end{itemize}
+
+The subset construction (or powerset construction) produces a DFA 
+\[
+D = (Q', \Sigma, \delta', q_0', F'),
+\]
+where:
+\begin{itemize}
+    \item \(q_0' = \{q_0\}\) (or the \(\epsilon\)-closure of \(q_0\) if \(\epsilon\)-transitions are present),
+    \item \(Q'\) is the set of all subsets of \(Q\) that are \emph{reachable} from \(\{q_0\}\) using the rule
+    \[
+      \delta'(S, a) = \bigcup_{q\in S} \delta(q,a)
+    \]
+    for each \(S \subseteq Q\) and \(a\in\Sigma\),
+    \item \(F' = \{ S \in Q' \mid S\cap F \neq \emptyset \}\).
+\end{itemize}
+
+\textbf{a. Description of the Algorithm}
+
+\begin{enumerate}
+  \item Initialize the DFA with the start state \(S_0 = \{q_0\}\).
+  \item For each state \(S\) in \(Q'\) (initially, just \(S_0\)) and for each symbol \(a \in \Sigma\), compute
+  \[
+    \delta'(S,a)= \bigcup_{q\in S} \delta(q,a).
+  \]
+  If this subset has not been seen before, add it to \(Q'\).
+  \item Continue until no new subsets are generated.
+\end{enumerate}
+
+\textbf{b. Proof of Equivalence}
+
+\textbf{Soundness:} Suppose the DFA \(D\) accepts a word \(w\). Then the state \(S\) reached after processing \(w\) satisfies \(S\cap F\neq \emptyset\). By construction, \(S\) represents all possible states in \(N\) after reading \(w\); hence, there is at least one computation in \(N\) that reaches an accepting state.
+
+\textbf{Completeness:} Conversely, if \(N\) accepts \(w\) then some computation ends in a state \(q\in F\). Consequently, the subset \(S\) reached in \(D\) contains \(q\) (i.e., \(S\cap F\neq \emptyset\)), and thus \(D\) accepts \(w\).
+
+\textbf{c. Example Application}
+
+Let 
+\[
+Q=\{q_0,q_1,q_2\}, \quad \Sigma=\{0,1\}, \quad q_0 \text{ is the start state}, \quad F=\{q_2\},
+\]
+with transitions:
+\[
+\delta(q_0,0)=\{q_0,q_1\},\quad \delta(q_0,1)=\{q_0\},\quad \delta(q_1,1)=\{q_2\},
+\]
+and all other transitions mapping to \(\emptyset\).
+
+The subset construction proceeds as follows:
+\begin{itemize}
+    \item Start with \(S_0=\{q_0\}\).
+    \item From \(S_0\):
+    \[
+      \delta'(S_0,0)=\{q_0,q_1\}\triangleq S_1,\quad \delta'(S_0,1)=\{q_0\}=S_0.
+    \]
+    \item From \(S_1=\{q_0,q_1\}\):
+    \[
+      \delta'(S_1,0)=\{q_0,q_1\}=S_1,\quad \delta'(S_1,1)=\{q_0,q_2\}\triangleq S_2.
+    \]
+    \item From \(S_2=\{q_0,q_2\}\):
+    \[
+      \delta'(S_2,0)=\{q_0,q_1\}=S_1,\quad \delta'(S_2,1)=\{q_0\}=S_0.
+    \]
+\end{itemize}
+Thus, the DFA has states \(S_0=\{q_0\}\), \(S_1=\{q_0,q_1\}\), and \(S_2=\{q_0,q_2\}\) with \(S_2\) as the sole accepting state.
+
+\textbf{d. Observations}
+
+Even though the NFA has 3 states, the worst-case DFA could have up to \(2^3=8\) states. In this example, only 3 reachable subsets occur, demonstrating that the algorithm generates only the necessary states.
+
+\textbf{Exercise 3.2.2: Analysis of a Specific NFA}
+
+Consider the NFA
+\[
+N=(Q,\Sigma,\delta,q_0,F)
+\]
+with:
+\begin{itemize}
+    \item \(Q=\{q_0,q_1,q_2,q_3\}\),
+    \item \(\Sigma=\{a,b\}\),
+    \item \(q_0\) is the start state,
+    \item \(F=\{q_3\}\), and
+    \item The transition function is given by:
+      \[
+      \begin{array}{rcl}
+      \delta(q_0,a) &=& \{q_0,q_1\},\\[1mm]
+      \delta(q_0,b) &=& \{q_0\},\\[1mm]
+      \delta(q_1,b) &=& \{q_2\},\\[1mm]
+      \delta(q_2,a) &=& \{q_3\}.
+      \end{array}
+      \]
+\end{itemize}
+
+\textbf*{a. Reachable Subsets}
+
+Starting with \(S_0=\{q_0\}\):
+\begin{itemize}
+    \item \(\delta'(S_0,a)=\{q_0,q_1\}\triangleq S_1\),
+    \item \(\delta'(S_0,b)=\{q_0\}=S_0\).
+\end{itemize}
+From \(S_1=\{q_0,q_1\}\):
+\begin{itemize}
+    \item \(\delta'(S_1,a)=\{q_0,q_1\}=S_1\),
+    \item \(\delta'(S_1,b)=\{q_0,q_2\}\triangleq S_2\).
+\end{itemize}
+From \(S_2=\{q_0,q_2\}\):
+\begin{itemize}
+    \item \(\delta'(S_2,a)=\{q_0,q_1,q_3\}\triangleq S_3\),
+    \item \(\delta'(S_2,b)=\{q_0\}=S_0\).
+\end{itemize}
+From \(S_3=\{q_0,q_1,q_3\}\):
+\begin{itemize}
+    \item \(\delta'(S_3,a)=\{q_0,q_1\}=S_1\),
+    \item \(\delta'(S_3,b)=\{q_0,q_2\}=S_2\).
+\end{itemize}
+Thus, the reachable subsets are:
+\[
+S_0=\{q_0\},\quad S_1=\{q_0,q_1\},\quad S_2=\{q_0,q_2\},\quad S_3=\{q_0,q_1,q_3\}.
+\]
+
+\textbf{b. DFA Transition Diagram}
+
+The DFA constructed has:
+\begin{itemize}
+    \item \textbf{States:} \(S_0, S_1, S_2, S_3\),
+    \item \textbf{Start state:} \(S_0\),
+    \item \textbf{Accepting state:} \(S_3\) (since \(q_3\in S_3\)).
+\end{itemize}
+
+The transitions are:
+\[
+\begin{array}{rcl}
+\delta'(S_0,a) &=& S_1,\quad \delta'(S_0,b)=S_0,\\[1mm]
+\delta'(S_1,a) &=& S_1,\quad \delta'(S_1,b)=S_2,\\[1mm]
+\delta'(S_2,a) &=& S_3,\quad \delta'(S_2,b)=S_0,\\[1mm]
+\delta'(S_3,a) &=& S_1,\quad \delta'(S_3,b)=S_2.
+\end{array}
+\]
+A state diagram can be drawn with these transitions.
+
+\textbf{c. Proof that No Additional States are Reachable}
+
+Every new subset is generated by applying \(\delta'\) to an existing subset. In this example, starting from \(S_0\) only \(S_1\), \(S_2\), and \(S_3\) are generated. No transition yields a subset outside \(\{S_0,S_1,S_2,S_3\}\). Thus, these four subsets are the complete set of reachable states.
+
+\textbf{d. Observations}
+
+Although the original NFA has 4 states (and a worst-case DFA might have \(2^4=16\) states), only 4 reachable subsets occur. This illustrates that the nondeterminism of the NFA does not necessarily lead to the full exponential blowup in the number of states in practice.
+
+
+\textbf{Exercise 4.4.1: DFA Minimization via Distinguishability}\\
+Consider the DFA with states where the start state is \(A\) and the only final state is \(D\). The transition function is given in Table~\ref{tab:dfa1}.
+
+\[
+\{A, B, C, D, E, F, G\},
+\]
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{c|cc}
+    \textbf{State} & \textbf{0} & \textbf{1} \\ \hline
+    \(A\) & \(B\) & \(A\) \\
+    \(B\) & \(A\) & \(C\) \\
+    \(C\) & \(B\) & \(D\) \\
+    \(*D\) & \(E\) & \(F\) \\
+    \(E\) & \(F\) & \(G\) \\
+    \(F\) & \(G\) & \(D\) \\
+    \(G\) & \(F\) & \(D\) \\
+  \end{tabular}
+  \caption{Transition function for the DFA in Exercise 4.4.1. Here, state \(D\) (marked with an asterisk) is final.}
+  \label{tab:dfa1}
+\end{table}
+
+\textbf{a. Table of Distinguishability}
+
+We first mark every pair \((p,q)\) where exactly one of \(p\) and \(q\) is final. Since \(D\) is the only final state, all pairs of the form \((D,X)\) with \(X \neq D\) are marked.
+
+Then, using the standard table-filling algorithm, we iteratively mark pairs \((p,q)\) if there exists an input symbol \(a\) such that the pair of transitions \((\delta(p,a), \delta(q,a))\) is already marked. After processing all pairs, we find that every pair of distinct states is marked except for the pair \((F,G)\). This indicates that states \(F\) and \(G\) are \emph{indistinguishable} (i.e., equivalent).
+
+\textbf{b. The Minimum-State Equivalent DFA}
+
+By merging the equivalent states \(F\) and \(G\) into a single state, denoted by \([FG]\), the minimized DFA has the following states:
+\[
+\{[A], [B], [C], [D], [E], [FG]\}.
+\]
+The transition function for the minimized DFA is as follows:
+\begin{itemize}
+  \item \([A]:\quad 0 \to [B],\quad 1 \to [A]\),
+  \item \([B]:\quad 0 \to [A],\quad 1 \to [C]\),
+  \item \([C]:\quad 0 \to [B],\quad 1 \to [D]\),
+  \item \([D]:\quad 0 \to [E],\quad 1 \to [FG]\),
+  \item \([E]:\quad 0 \to [FG],\quad 1 \to [FG]\),
+  \item \([FG]:\quad 0 \to [FG],\quad 1 \to [D]\).
+\end{itemize}
+Thus, the minimized DFA contains 6 states.
+
+\textbf{Exercise 4.4.2: Minimization of a 9-State DFA}
+
+Consider the DFA with states
+\[
+\{A, B, C, D, E, F, G, H, I\},
+\]
+with \(A\) as the start state and \(C\) and \(I\) as final states. Its transitions are given in Table~\ref{tab:dfa2}.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{c|cc|c}
+    \textbf{State} & \textbf{0} & \textbf{1} & \textbf{Final?} \\ \hline
+    \(A\) & \(B\) & \(E\) & No \\
+    \(B\) & \(C\) & \(F\) & No \\
+    \(*C\) & \(D\) & \(G\) & Yes \\
+    \(D\) & \(E\) & \(H\) & No \\
+    \(E\) & \(F\) & \(I\) & No \\
+    \(F\) & \(G\) & \(B\) & No \\
+    \(G\) & \(H\) & \(B\) & No \\
+    \(H\) & \(I\) & \(B\) & No \\
+    \(*I\) & \(H\) & \(E\) & Yes \\
+  \end{tabular}
+  \caption{Transition function for the DFA in Exercise 4.4.2. States \(C\) and \(I\) are final.}
+  \label{tab:dfa2}
+\end{table}
+
+\textbf{a. Table of Distinguishability}
+
+Again, we begin by marking all pairs in which one state is final and the other is nonfinal. Thus, every pair containing exactly one of \(C\) or \(I\) is marked immediately.
+
+Next, we consider the pairs of nonfinal states \(\{A, B, D, E, F, G, H\}\). By applying the table-filling algorithm (i.e., if for some input symbol the transitions from the pair lead to a marked pair, then mark the original pair), we eventually mark every pair among these states.
+
+Finally, we check the pair \((C,I)\) of final states. For example, on input 0, we have \(\delta(C,0)=D\) and \(\delta(I,0)=H\). The pair \((D,H)\) is marked because, for some input, it leads to distinguishable outcomes. Thus, \((C,I)\) is also marked.
+
+Hence, every pair of distinct states is distinguishable.
+
+\textbf{b. The Minimum-State DFA}
+
+Since all pairs of distinct states are distinguishable, no states can be merged. Therefore, the original DFA is already minimal and consists of 9 states:
+\[
+\{A, B, C, D, E, F, G, H, I\}.
+\]
+
+\textbf{ITALC Question:}
+In practice, is it always worth fully minimizing a DFA when implementing features like pattern matching or lexical analysis?
+
 
 
 
