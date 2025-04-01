@@ -38,7 +38,7 @@ The following schedule is subject to some potential changes or adjustment as the
 | W6    | Minimization                           |
 | W7    | [Pumping Lemma](https://hackmd.io/_nZMlo6eT9m2pm9gesUjDA)                             |
 |       | **Spring Break**                          |
-| W8    | Computability, Turing machines, (un)decidability |
+| W8    | [Computability, Turing machines, (un)decidability](https://hackmd.io/8tkqLH0OQU-9f-WYE2HJrQ) |
 | W9    | Algorithm complexity & Big O              |
 | W10   | Complexity classes and P vs NP            |
 | W11   | Constraint satisfaction problems          |
