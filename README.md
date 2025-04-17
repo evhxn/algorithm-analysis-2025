@@ -40,7 +40,7 @@ The following schedule is subject to some potential changes or adjustment as the
 |       | **Spring Break**                          |
 | W8    | [Computability, Turing machines, (un)decidability](https://hackmd.io/8tkqLH0OQU-9f-WYE2HJrQ) |
 | W9    | [Problems on undecidability](https://hackmd.io/9mIR3dtaQ1aQaxjj0X8gvw?edit)              |
-| W10   | Complexity theory          |
+| W10   | [Complexity theory](https://hackmd.io/@jweinberger/S1VIkpR0kg)          |
 | W11   | Constraint satisfaction problems          |
 | W12   | Graph algorithms I (Shortest paths)       |
 | W13   | Graph algorithms II (Flow networks)       |
