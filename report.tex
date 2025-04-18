@@ -1236,6 +1236,130 @@ Since all pairs of distinct states are distinguishable, no states can be merged.
 In practice, is it always worth fully minimizing a DFA when implementing features like pattern matching or lexical analysis?
 
 
+\subsection{\textbf{Week 7}}\\
+\textbf{Lecture Summary}\\
+TBD
+
+\textbf{Homework 6}\\
+\textbf{Exercise A:}\\
+\begin{enumerate}
+  \item \textbf{Input language:} \(L = \{\,1\,0^n : n\in\mathbb{N}\}\). on input \(1\,0^n\) the TM must output \(1\,0^{n+1}\).
+
+        \[
+          M_1 = (Q,\Sigma,\Gamma,\delta,q_0,B,F)
+        \]
+        \(Q=\{q_0,q_1,q_{\mathrm{accept}},q_{\mathrm{reject}}\},\;
+          \Sigma=\{0,1\},\;
+          \Gamma=\{0,1,B\},\;
+          F=\{q_{\mathrm{accept}}\}\).
+
+        \[
+        \begin{array}{r|ccc}
+                 & 0                  & 1                         & B \\ \hline
+        q_0      & (q_{\mathrm{reject}},0,R) & (q_1,1,R)                 &  - \\
+        q_1      & (q_1,0,R)          & (q_{\mathrm{reject}},1,R) & (q_{\mathrm{accept}},0,R)\\
+        q_{\mathrm{accept}} & \multicolumn{3}{c}{\text{halt+accept}}\\
+        q_{\mathrm{reject}} & \multicolumn{3}{c}{\text{halt+reject}}\\
+        \end{array}
+        \]
+
+  \item \textbf{Input language:} \(L = \{\,1\,0^n : n\in\mathbb{N}\}\). on input \(1\,0^n\) the TM must leave just the leading \(1\).
+
+        \[
+          M_2 = (Q,\Sigma,\Gamma,\delta,q_0,B,F)
+        \]
+        \(Q=\{q_0,q_1,q_{\mathrm{accept}},q_{\mathrm{reject}}\}\).
+
+        \[
+        \begin{array}{r|ccc}
+                 & 0                  & 1                         & B \\ \hline
+        q_0      & (q_{\mathrm{reject}},0,R) & (q_1,1,R)                 &  - \\
+        q_1      & (q_1,B,R)          & (q_{\mathrm{reject}},1,R) & (q_{\mathrm{accept}},B,R)\\
+        q_{\mathrm{accept}} & \multicolumn{3}{c}{\text{halt+accept}}\\
+        q_{\mathrm{reject}} & \multicolumn{3}{c}{\text{halt+reject}}\\
+        \end{array}
+        \]
+
+  \item \textbf{Input language:} all binary strings. the TM outputs the bitwise complement (swap \(0\leftrightarrow1\)).
+
+        \[
+          M_3 = (Q,\Sigma,\Gamma,\delta,q_0,B,F),\;
+          Q=\{q_0,q_{\mathrm{accept}}\}
+        \]
+
+        \[
+        \begin{array}{r|ccc}
+                 & 0          & 1          & B \\ \hline
+        q_0      & (q_0,1,R)  & (q_0,0,R)  & (q_{\mathrm{accept}},B,R)\\
+        q_{\mathrm{accept}} & \multicolumn{3}{c}{\text{halt+accept}}\\
+        \end{array}
+        \]
+\end{enumerate}
+
+    \textbf{Question: }If we encode the step bound \(k\) in unary (\(1^{k}\)) instead of binary, does the language  
+        \(L_{3} = \{\langle M,w,k\rangle \mid M \text{ halts on } w \text{ in } \le k \text{ steps}\}\)  
+        remain decidable, or does the change in encoding alter its classification?  
+
+\subsection{\textbf{Week 8}}\\
+\textbf{Lecture Summary}\\
+TBD
+
+\textbf{Homework 7}\\
+\textbf{Exercise 1: Decidability}\\
+Classify each language as \emph{decidable}, \emph{recursively enumerable (r.e.)}, or \emph{co‑r.e.}. 
+
+\begin{enumerate}
+  \item \(L_1 = \{\,M \mid M \text{ halts on itself}\}\)  
+        \begin{itemize}
+          \item \textbf{r.e.\ but not decidable}; not co‑r.e.  
+          \item Argument: Simulate \(M\) on its own description; accept if it halts (semi‑decider).  
+                Decidable would imply a solution to the halting problem.
+        \end{itemize}
+
+  \item \(L_2 = \{\,\langle M,w\rangle \mid M \text{ halts on } w\}\)  
+        \begin{itemize}
+          \item \textbf{r.e.\ but not decidable}; not co‑r.e.  
+          \item Classic halting problem.
+        \end{itemize}
+
+  \item \(L_3 = \{\,\langle M,w,k\rangle \mid M \text{ halts on } w \text{ in } \le k \text{ steps}\}\)  
+        \begin{itemize}
+          \item \textbf{Decidable} (thus both r.e.\ and co‑r.e.).  
+          \item Simulate exactly \(k\) steps, accept if halts; otherwise reject.
+        \end{itemize}
+
+        
+\end{enumerate}
+
+\bigskip
+\textbf{Exercise 2: Closure Properties}\\
+For each statement, indicate True/False and give justification.
+
+\begin{enumerate}
+  \item \(\;L_1, L_2\) decidable \(\Rightarrow L_1 \cup L_2\) decidable. \textbf{True}.  
+        Run both deciders; accept if either accepts.
+
+  \item \(L\) decidable \(\Rightarrow \overline{L}\) decidable. \textbf{True}.  
+        Flip the accept/reject outcome.
+
+  \item \(L\) decidable \(\Rightarrow L^{*}\) decidable. \textbf{True}.  
+        Enumerate all segmentations; dynamic‑programming decider halts.
+
+  \item \(L_1, L_2\) r.e.\ \(\Rightarrow L_1 \cup L_2\) r.e. \textbf{True}.  
+        Dovetail the two semi‑deciders.
+
+  \item \(L\) r.e.\ \(\Rightarrow \overline{L}\) r.e. \textbf{False}.  
+        Counterexample: the halting problem; complement not r.e.
+
+  \item \(L\) r.e.\ \(\Rightarrow L^{*}\) r.e. \textbf{True}.  
+        Enumerate finite concatenations of strings from an enumerator for \(L\).
+\end{enumerate}
+
+\textbf{Question: } For an r.e.\ language \(L\) we know that \(L^{*}\) is r.e.; what about the intersection  
+        \(L \cap \overline{L}\)? is it always decidable, and how does this relate to the closure results we discussed?
+
+
+
 
 
 \end{document}
