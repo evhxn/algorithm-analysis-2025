@@ -1087,7 +1087,7 @@ with:
       \]
 \end{itemize}
 
-\textbf*{a. Reachable Subsets}
+\textbf{a. Reachable Subsets}
 
 Starting with \(S_0=\{q_0\}\):
 \begin{itemize}
@@ -1359,10 +1359,171 @@ For each statement, indicate True/False and give justification.
         \(L \cap \overline{L}\)? is it always decidable, and how does this relate to the closure results we discussed?
 
 
+\subsection{\textbf{Week 9}}\\
+\textbf{Lecture Summary}
+\\Unless stated otherwise, every variable ranges over the naturals $\mathbb N=\{1,2,3,\dots\}$ and $\log$ denotes the natural logarithm.
+
+\textbf{Homework 8-9}
+\textbf{Exercise 1: Growth order}
+Order the functions from \emph{slowest} to \emph{fastest} growth:
+\[
+\log(\log n),\;
+\log n,\;
+e^{\log n},\;
+e^{2\log n},\;
+2^{n},\;
+e^{n},\;
+n!,\;
+2^{\,2^{n}}.
+\]
+
+\begin{enumerate}
+  \item $\log(\log n)$ \quad 
+        $\displaystyle\lim_{n\to\infty}\frac{\log(\log n)}{\log n}=0$  
+        by L’Hospital, so $\log(\log n)=o(\log n)$.
+
+  \item $\log n$ \quad 
+        For every $\varepsilon>0$, $\displaystyle\lim_{n\to\infty}\frac{\log n}{n^\varepsilon}=0$,  
+        hence $\log n=o(n^\varepsilon)$ and is beaten by any polynomial.        
+
+  \item $e^{\log n}=n$ \quad (inverse property of log/exp).
+
+  \item $e^{2\log n}=(e^{\log n})^{2}=n^{2}$.
+
+  \item $2^{n}$ \quad 
+        $\displaystyle\lim_{n\to\infty}\frac{n^{k}}{2^{n}}=0$ for every fixed $k$,  
+        so every polynomial is $o(2^{n})$.
+
+  \item $e^{n}$ \quad  
+        $2^{n}=e^{n\log 2}$; since $\log 2$ is a constant,  
+        $2^{n}\in\Theta(e^{n})$ (same class, different base).
+
+  \item $n!$ \quad  
+        Stirling: $n!\sim\sqrt{2\pi n}\,(n/e)^{n}\gg a^{n}$ for any fixed $a>1$.
+
+  \item $2^{\,2^{n}}$ \quad  
+        Double exponential: for all $a>1$, $a^{n}=o(2^{2^{n}})$.
+\end{enumerate}
+
+%===========================================================
+\bigskip
+\textbf{Exercise 2: Basic properties of \(\mathcal O\)}
+Definition used: \(f\in\mathcal O(g)\iff\exists M>0,\,N\;\forall n\ge N:\;f(n)\le M\,g(n).\)
+
+Let $f,g,h:\mathbb N\!\to\!\mathbb R_{\ge0}$ and $c>0$.
+
+\begin{enumerate}
+  \item $f\in\mathcal O(f)$: choose $M=1$, $N=1$.
+
+  \item $\mathcal O(cf)=\mathcal O(f)$:  
+
+        \emph{Forward} — if $u\le M\,c\,f$ for $n\ge N$, set $M'=Mc$.  
+        \emph{Reverse} — if $u\le M\,f$, then $u\le M\,cf$ since $c>0$.
+
+  \item If $f(n)\le g(n)$ for $n\ge N_0$ then $\mathcal O(f)\subseteq\mathcal O(g)$.  
+        Given $u\le M_1\,f$ for $n\ge N_1$, combine with $f\le g$ on  
+        $n\ge N=\max\{N_0,N_1\}$ to get $u\le M_1\,g$.
+
+  \item If $\mathcal O(f)\subseteq\mathcal O(g)$ then  
+        $\mathcal O(f+h)\subseteq\mathcal O(g+h)$.  
+        Because $f+h\in\mathcal O(f)$ and $\mathcal O(f)\subseteq\mathcal O(g)$,  
+        $\exists M_2,N_2$ with $f+h\le M_2(g+h)$.  
+        If $u\le M_1(f+h)$ for $n\ge N_1$, then  
+        $u\le M_1M_2\,(g+h)$ for $n\ge\max\{N_1,N_2\}$.
+
+  \item If $h(n)>0$ and $\mathcal O(f)\subseteq\mathcal O(g)$ then  
+        $\mathcal O(fh)\subseteq\mathcal O(gh)$:  
+        multiply the inequality from part (3) by the positive $h(n)$.
+\end{enumerate}
+
+%===========================================================
+\bigskip
+\textbf{Exercise 3: Consequences for common families}
+Let $i,j,k\in\mathbb N$.
+
+\begin{enumerate}
+  \item If $j\le k$, then $n^{j}\le n^{k}$ for $n\ge1$  
+        $\;\Rightarrow\;$ $\mathcal O(n^{j})\subseteq\mathcal O(n^{k})$  
+        (constants $M=1,N=1$).
+
+  \item Same hypothesis gives $n^{j}+n^{k}\le 2n^{k}$ for $n\ge1$,  
+        so $\mathcal O(n^{j}+n^{k})\subseteq\mathcal O(n^{k})$  
+        (multiply old $M$ by 2).
+
+  \item For the polynomial $p(n)=\sum_{i=0}^{k}a_i n^{i}$ let  
+        $A:=\sum_{i=0}^{k}|a_i|$.  Then  
+        $\bigl|p(n)\bigr|\le A\,n^{k}$ for all $n\ge1$,  
+        hence $p\in\mathcal O(n^{k})$ with $M=A,N=1$.
+
+  \item $\log n \le n$ for $n\ge1$ $\Rightarrow$ $\mathcal O(\log n)\subseteq\mathcal O(n)$.
+
+  \item For $n\ge2$, $\log n\le n$ $\Rightarrow$ $n\log n\le n^{2}$  
+        $\Rightarrow$ $\mathcal O(n\log n)\subseteq\mathcal O(n^{2})$.
+\end{enumerate}
+
+%===========================================================
+\bigskip
+\textbf{Exercise 4: Comparing classes}
+Use limits to prove containments.
+
+\[
+\begin{array}{ll}
+1.\;\mathcal O(n)\text{ vs. }\mathcal O(\sqrt n),&
+2.\;\mathcal O(n^{2})\text{ vs. }\mathcal O(2^{n}),\\[4pt]
+3.\;\mathcal O(\log n)\text{ vs. }\mathcal O((\log n)^{2}),&
+4.\;\mathcal O(2^{n})\text{ vs. }\mathcal O(3^{n}),\\[4pt]
+5.\;\mathcal O(\log_{2}n)\text{ vs. }\mathcal O(\log_{3}n).
+\end{array}
+\]
+
+\begin{enumerate}
+  \item $\displaystyle\lim_{n\to\infty}\frac{\sqrt n}{n}=0$  
+        $\Rightarrow\mathcal O(\sqrt n)\subsetneq\mathcal O(n)$.
+
+  \item $\displaystyle\lim_{n\to\infty}\frac{n^{2}}{2^{n}}=0$  
+        $\Rightarrow\mathcal O(n^{2})\subsetneq\mathcal O(2^{n})$.
+
+  \item $\displaystyle\lim_{n\to\infty}\frac{\log n}{(\log n)^{2}}=0$  
+        $\Rightarrow\mathcal O(\log n)\subsetneq\mathcal O((\log n)^{2})$.
+
+  \item $\displaystyle\lim_{n\to\infty}\frac{2^{n}}{3^{n}}=(2/3)^{n}=0$  
+        $\Rightarrow\mathcal O(2^{n})\subsetneq\mathcal O(3^{n})$.
+
+  \item $\log_{2}n=\dfrac{\log_{3}n}{\log_{3}2}$ (constant factor)   
+        $\Rightarrow\mathcal O(\log_{2}n)=\mathcal O(\log_{3}n)$.
+\end{enumerate}
+
+%===========================================================
+\bigskip
+\textbf{Exercise 5: Sorting algorithms}
+Give worst-case complexity and a rationale.
+
+\begin{enumerate}
+  \item \emph{Bubble sort} and \emph{Insertion sort}:  
+        both perform $\Theta(n^{2})$ comparisons and swaps in the worst case  
+        (inner loop scans almost the whole array).  
+        Insertion sort usually beats bubble sort on nearly-sorted data because
+        its inner while-loop stops early once the insertion point is found.
+
+  \item \emph{Insertion sort} vs.\ \emph{Merge sort}:  
+        insertion sort is $\Theta(n^{2})$.  
+        Merge sort solves the recurrence $T(n)=2T(n/2)+\Theta(n)$,  
+        giving $T(n)=\Theta(n\log n)$ by the Master Theorem, thus asymptotically faster.
+
+  \item \emph{Merge sort} vs.\ \emph{Quick sort}:  
+        merge sort is $\Theta(n\log n)$ in \emph{all} cases.  
+        Quick sort is $\Theta(n\log n)$ on average (good pivots) but  
+        $\Theta(n^{2})$ in the worst case (already-sorted input with naive pivots).  
+        Therefore merge sort has better worst-case guarantees,  
+        while quick sort is often faster in practice due to low constants  
+        and cache-friendly in-place partitioning.
+\end{enumerate}
+\textbf{Questions: } 1. Are there any \emph{real} problems whose best algorithm runs in about $n^{\log n}$ time sitting between polynomial and exponential or is that gap still empty?  2. If I encode a graph super-bloated (unary weights, lots of repeats), does Kruskal suddenly stop being ``poly-time'' on a Turing machine? How much can encoding choice mess with our ``this problem is in~P'' claims?
 
 
 
 \end{document}
+
 
 
 \section{Synthesis}
