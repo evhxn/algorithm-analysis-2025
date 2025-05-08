@@ -15,7 +15,7 @@ On Thursdays, office hours will take place in Swenson N308, 4--530.
 ## Quick links
 * [Syllabus](syllabus-long.md)
 * [Participation](participation.md)
-* [Report](report.md)
+* [Report](report.md) and [Feedback](https://hackmd.io/e3Uh-NQ9RJaTmBropvq7kQ?view)
 * [Git best practices](git-best-practices.md)
 * [Top 12 Git commands every developer must know](https://github.blog/developer-skills/github/top-12-git-commands-every-developer-must-know/)
 * [Resources for participation](https://hackmd.io/@jweinberger/H1gkQyZQ1l)
