@@ -43,5 +43,5 @@ The following schedule is subject to some potential changes or adjustment as the
 | W10   | [Complexity theory](https://hackmd.io/@jweinberger/S1VIkpR0kg)          |
 | W11   | [Constraint satisfaction problems](https://hackmd.io/OWm2MWJGQaOsslCsBOVplg) |
 | W12   | [Programming Assignment 2](https://hackmd.io/hZ4n_JBQRzCRRYuGloQqdQ)       |
-| W13   | Graph algorithms I(Flow networks)       |
+| W13   | Graph algorithms I (Flow networks): [Homework](https://hackmd.io/sZKayPupQUaQaWGklEtdzQ)       |
 | W14   | Graph algorithms II      |
