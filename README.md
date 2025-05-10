@@ -13,9 +13,10 @@ Automata theory (approx. 50%), computability & complexity theory (approx. 25%),
 On Thursdays, office hours will take place in Swenson N308, 4--530.
 
 ## Quick links
+* [Notes Section 1](https://github.com/jonweinb/algorithm-analysis-2025/blob/main/406-s25-1.pdf) and [Notes Section 1](https://github.com/jonweinb/algorithm-analysis-2025/blob/main/406-s25-2.pdf)
 * [Syllabus](syllabus-long.md)
 * [Participation](participation.md)
-* [Report](report.md)
+* [Report](report.md) and [Feedback](https://hackmd.io/e3Uh-NQ9RJaTmBropvq7kQ?view)
 * [Git best practices](git-best-practices.md)
 * [Top 12 Git commands every developer must know](https://github.blog/developer-skills/github/top-12-git-commands-every-developer-must-know/)
 * [Resources for participation](https://hackmd.io/@jweinberger/H1gkQyZQ1l)
@@ -41,7 +42,7 @@ The following schedule is subject to some potential changes or adjustment as the
 | W8    | [Computability, Turing machines, (un)decidability](https://hackmd.io/8tkqLH0OQU-9f-WYE2HJrQ) |
 | W9    | [Problems on undecidability](https://hackmd.io/9mIR3dtaQ1aQaxjj0X8gvw?edit)              |
 | W10   | [Complexity theory](https://hackmd.io/@jweinberger/S1VIkpR0kg)          |
-| W11   | Constraint satisfaction problems          |
-| W12   | Graph algorithms I (Shortest paths)       |
-| W13   | Graph algorithms II (Flow networks)       |
-| W14   | Graph algorithms III (Game theory)        |
+| W11   | [Constraint satisfaction problems](https://hackmd.io/OWm2MWJGQaOsslCsBOVplg) |
+| W12   | [Programming Assignment 2](https://hackmd.io/hZ4n_JBQRzCRRYuGloQqdQ)       |
+| W13   | Graph algorithms I (Flow networks): [Homework](https://hackmd.io/sZKayPupQUaQaWGklEtdzQ)       |
+| W14   | Graph algorithms II      |
