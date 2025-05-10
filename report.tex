@@ -1363,7 +1363,7 @@ For each statement, indicate True/False and give justification.
 \textbf{Lecture Summary}
 \\Unless stated otherwise, every variable ranges over the naturals $\mathbb N=\{1,2,3,\dots\}$ and $\log$ denotes the natural logarithm.
 
-\textbf{Homework 8-9}
+\textbf{Homework 8-9}\\
 \textbf{Exercise 1: Growth order}
 Order the functions from \emph{slowest} to \emph{fastest} growth:
 \[
@@ -1519,6 +1519,183 @@ Give worst-case complexity and a rationale.
         and cache-friendly in-place partitioning.
 \end{enumerate}
 \textbf{Questions: } 1. Are there any \emph{real} problems whose best algorithm runs in about $n^{\log n}$ time sitting between polynomial and exponential or is that gap still empty?  2. If I encode a graph super-bloated (unary weights, lots of repeats), does Kruskal suddenly stop being ``poly-time'' on a Turing machine? How much can encoding choice mess with our ``this problem is in~P'' claims?
+
+\subsection{\textbf{Week 10}}\\
+\textbf{Lecture Summary}\\
+TBD
+
+%===========================================================
+\bigskip
+\textbf{Homework 10--11}
+
+%-----------------------------------------------------------
+\bigskip
+\textbf{Exercise 1: Converting formulas to CNF}
+
+Rewrite each formula in conjunctive normal form (CNF).  Show every logical equivalence used.
+
+\begin{enumerate}
+\item $\varphi_1 := \neg((a \land b) \lor (\neg c \land d))$
+
+```
+    \begin{align*}
+      \varphi_1
+        &\equiv \neg(a \land b) \land \neg(\neg c \land d) && \text{De~Morgan}\\
+        &\equiv (\neg a \lor \neg b) \land (c \lor \neg d).\\[-6pt]
+    \end{align*}
+    Hence the CNF consists of the two clauses $(\neg a \lor \neg b)$ and $(c \lor \neg d)$.
+```
+
+\item $\varphi_2 := \neg\bigl((p \lor q) \rightarrow (r \land \neg s)\bigr)$
+
+```
+    First eliminate the implication:
+    \[(p \lor q) \rightarrow (r \land \neg s)\;\equiv\; \neg(p \lor q) \lor (r \land \neg s).\]
+    Then apply De~Morgan again:
+    \begin{align*}
+      \varphi_2
+        &\equiv \neg\bigl(\neg(p \lor q) \lor (r \land \neg s)\bigr)\\
+        &\equiv (p \lor q) \land \neg(r \land \neg s)\\
+        &\equiv (p \lor q) \land (\neg r \lor s).
+    \end{align*}
+    The resulting CNF has the clauses $(p \lor q)$ and $(\neg r \lor s)$.
+```
+
+\end{enumerate}
+
+%-----------------------------------------------------------
+\bigskip
+\textbf{Exercise 2: Satisfiability analysis}
+
+For each formula decide whether it is satisfiable.  
+If it is, provide a satisfying assignment; otherwise give a short proof of impossibility.
+
+\begin{enumerate}
+  \item $\psi_1 := (a \lor \neg b)\land(\neg a \lor b)\land(\neg a \lor \neg b).$  
+
+        Truth-table inspection shows the \emph{only} model is
+        $a=\mathsf F,\; b=\mathsf F$, so $\psi_1$ is \emph{satisfiable}.
+
+  \item $\psi_2 := (\neg p \lor q)\land(\neg q \lor r)\land\neg(\neg p \lor r).$
+
+        \[
+        \begin{array}{c@{\;}c@{\;}c \;|\; c@{\;}c@{\;}c \;|\; c}
+          p & q & r &
+          \neg p\lor q & \neg q\lor r & \neg(\neg p\lor r) &
+          \psi_2 \\ \hline
+          \mathsf T & \mathsf T & \mathsf T & \mathsf T & \mathsf T & \mathsf F & \mathsf F \\
+          \mathsf T & \mathsf T & \mathsf F & \mathsf T & \mathsf F & \mathsf T & \mathsf F \\
+          \mathsf T & \mathsf F & \mathsf T & \mathsf F & \mathsf T & \mathsf F & \mathsf F \\
+          \mathsf T & \mathsf F & \mathsf F & \mathsf F & \mathsf T & \mathsf T & \mathsf F \\
+          \mathsf F & \mathsf T & \mathsf T & \mathsf T & \mathsf T & \mathsf F & \mathsf F \\
+          \mathsf F & \mathsf T & \mathsf F & \mathsf T & \mathsf F & \mathsf F & \mathsf F \\
+          \mathsf F & \mathsf F & \mathsf T & \mathsf T & \mathsf T & \mathsf F & \mathsf F \\
+          \mathsf F & \mathsf F & \mathsf F & \mathsf T & \mathsf T & \mathsf F & \mathsf F
+        \end{array}
+        \]
+
+        Every row falsifies at least one conjunct, hence $\psi_2$ is \emph{unsatisfiable}.
+
+  \item $\psi_3 := (x \lor y)\land(\neg x \lor y)\land(x \lor \neg y)\land(\neg x \lor \neg y).$
+
+        From the first two clauses we derive $y$; from the last two we derive $\neg y$.  
+        The contradictory requirements make $\psi_3$ \emph{unsatisfiable}.
+\end{enumerate}
+
+%-----------------------------------------------------------
+\bigskip
+\textbf{Exercise 3: Encoding \emph{Sudoku} in CNF}
+
+Introduce propositional variables $x_{r,c,v}$ for rows $\,r\in\{1,\dots,9\}$,
+columns $\,c\in\{1,\dots,9\}$ and values $\,v\in\{1,\dots,9\}$, where
+$x_{r,c,v}$ is \emph{true} iff entry $(r,c)$ carries the number $v$.
+
+The global constraint
+$\varphi = C_1 \land C_2 \land C_3 \land C_4 \land C_5 \land C_6$
+is expressed by the following six CNFs.
+
+\begin{description}
+  \item[$C_1$ (\emph{at least one value per cell}).]
+        \[
+          C_1 \;=\; \bigwedge_{r,c}\Bigl(\,\bigvee_{v=1}^{9} x_{r,c,v}\Bigr).
+        \]
+
+  \item[$C_2$ (\emph{at most one value per cell}).]
+        \[
+          C_2 \;=\; \bigwedge_{r,c}\;
+                     \bigwedge_{1 \le v < w \le 9}
+                     \bigl(\neg x_{r,c,v}\;\lor\;\neg x_{r,c,w}\bigr).
+        \]
+
+  \item[$C_3$ (\emph{each row contains every digit}).]
+        \[
+          C_3 \;=\; \bigwedge_{r=1}^{9}\;
+                     \bigwedge_{v=1}^{9}
+                     \Bigl(\,\bigvee_{c=1}^{9} x_{r,c,v}\Bigr).
+        \]
+
+  \item[$C_4$ (\emph{each column contains every digit}).]
+        \[
+          C_4 \;=\; \bigwedge_{c=1}^{9}\;
+                     \bigwedge_{v=1}^{9}
+                     \Bigl(\,\bigvee_{r=1}^{9} x_{r,c,v}\Bigr).
+        \]
+
+  \item[$C_5$ (\emph{each $3\times3$ block contains every digit}).]
+        \[
+          C_5 \;=\; \bigwedge_{b_r = 0}^{2}\;
+                     \bigwedge_{b_c = 0}^{2}\;
+                     \bigwedge_{v=1}^{9}
+                     \Bigl(\,
+                        \bigvee_{r = 3b_r + 1}^{\,3b_r + 3}
+                        \;\bigvee_{c = 3b_c + 1}^{\,3b_c + 3}
+                        x_{r,c,v}\Bigr).
+        \]
+
+  \item[$C_6$ (\emph{given clues}).]
+        For every pre-filled cell $(r,c)$ with value $v_0$ add the unit clause $x_{r,c,v_0}$.
+\end{description}
+%-----------------------------------------------------------
+
+\medskip
+\medskip
+\textbf{Bonus: Generic $n=k^{2}$ Sudoku.}
+
+Let $n=k^{2}$ with $k\ge 2$ and keep the variables
+$x_{r,c,v}$ for $1\le r,c,v\le n$.
+
+\begin{description}
+  \item[$C_1$] $\displaystyle
+     \bigwedge_{r=1}^{n}\bigwedge_{c=1}^{n}
+       \Bigl(\;\bigvee_{v=1}^{n} x_{r,c,v}\Bigr)$
+
+  \item[$C_2$] $\displaystyle
+     \bigwedge_{r=1}^{n}\bigwedge_{c=1}^{n}
+       \bigwedge_{1\le v<w\le n}
+       (\neg x_{r,c,v}\,\lor\,\neg x_{r,c,w})$
+
+  \item[$C_3$] $\displaystyle
+     \bigwedge_{r=1}^{n}\bigwedge_{v=1}^{n}
+       \Bigl(\;\bigvee_{c=1}^{n} x_{r,c,v}\Bigr)$
+
+  \item[$C_4$] $\displaystyle
+     \bigwedge_{c=1}^{n}\bigwedge_{v=1}^{n}
+       \Bigl(\;\bigvee_{r=1}^{n} x_{r,c,v}\Bigr)$
+
+  \item[$C_5$] $\displaystyle
+     \bigwedge_{B_r=0}^{k-1}\bigwedge_{B_c=0}^{k-1}\bigwedge_{v=1}^{n}
+       \Bigl(\;
+         \bigvee_{r=kB_r+1}^{kB_r+k}
+         \;\bigvee_{c=kB_c+1}^{kB_c+k}
+         x_{r,c,v}\Bigr)$
+
+  \item[$C_6$]  For each given clue $(r,c)=v_{0}$ add the unit clause $x_{r,c,v_{0}}$.
+\end{description}
+
+These six families of clauses constitute a CNF whose models are in one-to-one correspondence with valid \(k^{2}\times k^{2}\) Sudoku grids.
+
+\bigskip
+\textbf{Questions:} 1. What is the smallest clause-count known for a complete Sudoku CNF that still lets modern SAT solvers finish each standard puzzle in under a second?
 
 
 
