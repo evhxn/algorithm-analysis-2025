@@ -56,7 +56,7 @@ Out of a total of 200 points the report is worth 90 points and divided approxima
 - (4 points): Organization of the report, layout, typesetting.
 - (4 points): Quality of writing, style, references.
 - (13x5=65 points): 5 points per quality and timely submission of the homework.
-- (12 points:) Lessons from the Group Assignments and Project.
+- (12 points:) Synthesis.
 - (3 points): Conclusion. 
 
 ## Writing of the Report
