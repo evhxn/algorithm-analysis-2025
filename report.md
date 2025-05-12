@@ -1,6 +1,6 @@
 # Report
 
-The report will be written in $\LaTeX$ (https://www.latex-project.org/). A template for your $\LaTeX$ source file [`report.tex`](report/report.tex) and the compiled [pdf](report/report.pdf). For guidelines see [`report-guidelines.tex`](report/report-guidelines.tex) and the compiled [pdf](report/report-guidelines.pdf) and for Latex examples see [`latex-example.tex`](report/latex-example.tex) and [`latex-example.pdf`](report/latex-example.pdf).
+The report will be written in $\LaTeX$ (https://www.latex-project.org/). A template for your $\LaTeX$ source file [`report.tex`](report/report.tex) and the compiled [pdf](report/report.pdf). For guidelines see [`report-guidelines.tex`](report/report-guidelines.tex) and the compiled [pdf](report/report-guidelines.pdf) and for Latex examples see [`latex-example.tex`](report/latex-example.tex) and [`latex-example.pdf`](report/latex-example.pdf). See also [feedback](https://hackmd.io/e3Uh-NQ9RJaTmBropvq7kQ?view) for ways in which to improve your report compiled throughout homework grading.
 
 ## Teaching Rationale
 
