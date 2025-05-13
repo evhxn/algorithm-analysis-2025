@@ -13,7 +13,7 @@ Automata theory (approx. 50%), computability & complexity theory (approx. 25%),
 On Thursdays, office hours will take place in Swenson N308, 4--530.
 
 ## Quick links
-* [Notes Section 1](https://github.com/jonweinb/algorithm-analysis-2025/blob/main/406-s25-1.pdf) and [Notes Section 1](https://github.com/jonweinb/algorithm-analysis-2025/blob/main/406-s25-2.pdf)
+* [Notes Section 1](https://github.com/jonweinb/algorithm-analysis-2025/blob/main/406-s25-1.pdf) and [Notes Section 2](https://github.com/jonweinb/algorithm-analysis-2025/blob/main/406-s25-2.pdf)
 * [Syllabus](syllabus-long.md)
 * [Participation](participation.md)
 * [Report](report.md) and [Feedback](https://hackmd.io/e3Uh-NQ9RJaTmBropvq7kQ?view)
