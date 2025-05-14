@@ -1,6 +1,6 @@
 # Report
 
-The report will be written in $\LaTeX$ (https://www.latex-project.org/). A template for your $\LaTeX$ source file [`report.tex`](report/report.tex) and the compiled [pdf](report/report.pdf). For guidelines see [`report-guidelines.tex`](report/report-guidelines.tex) and the compiled [pdf](report/report-guidelines.pdf) and for Latex examples see [`latex-example.tex`](report/latex-example.tex) and [`latex-example.pdf`](report/latex-example.pdf).
+The report will be written in $\LaTeX$ (https://www.latex-project.org/). A template for your $\LaTeX$ source file [`report.tex`](report/report.tex) and the compiled [pdf](report/report.pdf). For guidelines see [`report-guidelines.tex`](report/report-guidelines.tex) and the compiled [pdf](report/report-guidelines.pdf) and for Latex examples see [`latex-example.tex`](report/latex-example.tex) and [`latex-example.pdf`](report/latex-example.pdf). See also [feedback](https://hackmd.io/e3Uh-NQ9RJaTmBropvq7kQ?view) for ways in which to improve your report compiled throughout homework grading.
 
 ## Teaching Rationale
 
@@ -56,7 +56,7 @@ Out of a total of 200 points the report is worth 90 points and divided approxima
 - (4 points): Organization of the report, layout, typesetting.
 - (4 points): Quality of writing, style, references.
 - (13x5=65 points): 5 points per quality and timely submission of the homework.
-- (12 points:) Lessons from the Group Assignments and Project.
+- (12 points:) Synthesis.
 - (3 points): Conclusion. 
 
 ## Writing of the Report
@@ -115,15 +115,9 @@ Finally, do not change the general layout specified in the template. Do not chan
 
 [^firstDraft]: Mathematics is rather similar to programming in this respect. The first draft is (almost) never correct.
 
-## Lessons from the Group Assignments and Project
+## Synthesis
 
-Group work is an important part of the course. But we also want to hear from each student individually about what they learned from the group work.
-
-Write 1.5 pages about your individual contributions to the programming group assignments and projects.
-
-Be as technical and detailed as possible. Particularly valuable are *interesting*  examples where you connect concrete technical details with *interesting* general observations or where the theory discussed in the lectures helped with the design or implementation of the project.
-
-Write this section during the semester. This is approximately a quarter of apage per week and the material should come from the work you do anyway. Just keep your eyes open for interesting lessons.
+(approx 1 page, plus references) This Section gives you an opportunity to practice "skill drill" and to explore the material in more depth. The purpose of this section is to synthesize the knowledge you gained. Since Algorithm Analysis is a wide field, it may be appropriate to focus on a particular topic of your choice. 
 
 Make sure that you use LaTeX well to structure your writing (eg by using subsections).
 
