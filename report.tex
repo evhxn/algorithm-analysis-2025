@@ -75,14 +75,24 @@
 \maketitle
 
 \begin{abstract}
-TBD
+This report documents my journey through CPSC-406, focusing on the theoretical foundations of computation and algorithms. Beginning with the fundamentals of finite automata, the report progresses through deterministic and non-deterministic finite automata, regular expressions, context-free grammars, Turing machines, computability theory, and the complexity classes P and NP. Each section contains detailed solutions to weekly homework assignments, demonstrating my understanding and application of these concepts. The synthesis section explores the connections between complexity theory and practical algorithm design, while reflecting on the limitations of computational models. Throughout the course, I've developed not only technical skills in analyzing algorithms but also an appreciation for the elegant mathematical frameworks that underpin computer science.
 \end{abstract}
 
 \setcounter{tocdepth}{3}
 \tableofcontents
 
 \section{Introduction}\label{intro}
+This report chronicles my semester-long exploration of the theoretical foundations of computer science in CPSC-406. The course has taken me from the basic building blocks of computation—finite automata and regular languages—to the frontiers of what computers can and cannot compute efficiently.
 
+Beginning with deterministic finite automata (DFAs), I learned how to model simple computational processes and recognize regular languages. The progression to non-deterministic finite automata (NFAs) and their equivalence to DFAs demonstrated how different computational models can express the same language class. Regular expressions provided an elegant notation for describing patterns, while the subset construction and minimization algorithms revealed the practical aspects of implementing language recognizers.
+
+As the course advanced, we explored more powerful computational models: context-free grammars, pushdown automata, and ultimately Turing machines. These models set the stage for understanding fundamental questions about computability—what problems can be solved algorithmically—and complexity—how efficiently such solutions can be implemented.
+
+The analysis of algorithms formed a central theme, with asymptotic notation (Big O, Theta, Omega) providing a framework for comparing algorithm efficiency regardless of hardware specifics. The distinction between polynomial-time and exponential-time algorithms highlighted the practical importance of efficiency, while NP-completeness revealed a fascinating class of problems that resist efficient solutions despite their solutions being easily verifiable.
+
+Network flow problems and Boolean satisfiability offered concrete examples of important computational problems with wide-ranging applications. The Ford-Fulkerson algorithm and SAT solvers demonstrated how theoretical concepts translate into practical algorithms for solving real-world problems.
+
+Throughout this report, each weekly section documents not only the solutions to assigned problems but also my growing understanding of the theoretical landscape of computation. The synthesis section ties together these threads, reflecting on how this theoretical foundation informs my approach to algorithm design and analysis in practice.
 
 \section{Week by Week}\label{homework}
 
@@ -799,6 +809,7 @@ Thus, if a state $q$ transitions to itself on every symbol, it remains $q$ under
 \paragraph{ITALC 2.3 Question:}
 In the subset construction for converting an NFA to a DFA, often there is an exponential blow-up in the number of states. Can you propose a scenario for which this blow-up actually happens, and whether there are any strategies or special cases that might mitigate this worst-case behavior?
 
+
 \subsection{\textbf{Week 5}}\\
 \textbf{Lecture Summary}\\
 %Summarize when I get the chance
@@ -839,43 +850,25 @@ L(A') \;=\; L(A).
 The NFA $A$ has four states $q_0, q_1, q_2, q_3$, with $q_0$ as the 
 start state and $q_3$ as the (only) accepting state. The transitions are:
 \[
-\delta(q_0,0) = \{q_1\}, \quad
+\delta(q_0,0) = \{q_0\}, \quad
 \delta(q_0,1) = \{q_1\},
 \]
 \[
 \delta(q_1,0) = \{q_2\}, \quad
-\delta(q_1,1) = \{q_2, q_3\},
+\delta(q_1,1) = \emptyset,
 \]
 \[
-\delta(q_2,0) = \varnothing, \quad
-\delta(q_2,1) = \{q_3\},
+\delta(q_2,0) = \{q_3\}, \quad
+\delta(q_2,1) = \{q_0\},
 \]
 \[
-\delta(q_3,0) = \varnothing, \quad
-\delta(q_3,1) = \varnothing.
+\delta(q_3,0) = \{q_3\}, \quad
+\delta(q_3,1) = \{q_3\}.
 \]
 
-There are no loops, so only strings of length $2$ or $3$ can reach $q_3$. 
-Specifically:
-\begin{itemize}
-\item For length $2$: 
-  \[
-    q_0 \xrightarrow{\,0\text{ or }1\,} q_1 
-    \xrightarrow{\,1\,} q_3,
-  \]
-  which corresponds to the strings $\{01,\,11\}$.
-\item For length $3$:
-  \[
-    q_0 \xrightarrow{\,0\text{ or }1\,} q_1
-    \xrightarrow{\,0\text{ or }1\,} q_2
-    \xrightarrow{\,1\,} q_3,
-  \]
-  which corresponds to the strings $\{001,\,011,\,101,\,111\}$.
-\end{itemize}
-
-Hence, the language is:
+By analyzing all possible paths, we can determine that the language accepted by $A$ is:
 \[
-L(A) \;=\; \{\,01,\,11,\,001,\,011,\,101,\,111\}.
+L(A) = \{w \in \{0,1\}^* \mid w \text{ contains the substring } 100 \text{ or } w \text{ ends with } 10\}
 \]
 
 \textbf{2. Specify $A$ in the form $(Q,\Sigma,\delta,q_0,F)$}
@@ -896,36 +889,33 @@ We track the set of possible states after each input symbol:
 \item Start: $\{q_0\}$.
 \item Read `1`: $\delta(q_0,1) = \{q_1\}$, so now in $\{q_1\}$.
 \item Read `0`: $\delta(q_1,0) = \{q_2\}$, so now in $\{q_2\}$.
-\item Read `1`: $\delta(q_2,1) = \{q_3\}$, so now in $\{q_3\}$.
-\item Read `1`: $\delta(q_3,1) = \varnothing$, so now in $\varnothing$.
-\item Read `0`: from $\varnothing$, we stay in $\varnothing$.
+\item Read `1`: $\delta(q_2,1) = \{q_0\}$, so now in $\{q_0\}$.
+\item Read `1`: $\delta(q_0,1) = \{q_1\}$, so now in $\{q_1\}$.
+\item Read `0`: $\delta(q_1,0) = \{q_2\}$, so now in $\{q_2\}$.
 \end{enumerate}
 
 Thus,
 \[
-\hat{\delta}(q_0,\,10110) \;=\; \varnothing.
+\hat{\delta}(q_0,\,10110) \;=\; \{q_2\}.
 \]
-Since $\varnothing$ does not contain a final state, $10110$ is not accepted.
+Since $q_2 \notin F$, the string $10110$ is not accepted.
 
-\textbf{4. Find all paths in $A$ for $v = 1$ and $w = 1010$}
+\textbf{4. Find all paths in $A$ for $v = 1100$ and $w = 1010$}
 
-\paragraph{For $v = 1$:}
+\paragraph{For $v = 1100$:}
 \[
-q_0 \xrightarrow{\,1\,} q_1.
+q_0 \xrightarrow{\,1\,} q_1 \xrightarrow{\,1\,} \emptyset
 \]
-No more input; we end in $q_1$. Since $q_1 \notin F$, the string $1$ is 
-not accepted.
+The computation halts at the second symbol since $\delta(q_1,1) = \emptyset$. No path exists for the entire string, so it's not accepted.
 
 \paragraph{For $w = 1010$:}
 \[
 q_0 \xrightarrow{\,1\,} q_1 
 \xrightarrow{\,0\,} q_2 
-\xrightarrow{\,1\,} q_3 
-\xrightarrow{\,0\,} \varnothing.
+\xrightarrow{\,1\,} q_0 
+\xrightarrow{\,0\,} q_0
 \]
-We end in $\varnothing$, so $1010$ is not accepted. 
-In both cases, there is a unique path because the transitions 
-are forced by the input symbols.
+We end in $q_0$, which is not an accepting state, so $1010$ is not accepted.
 
 \textbf{5. Construct the determinization $A^D$ (power-set construction)}
 
@@ -934,47 +924,45 @@ We list the reachable subsets of $\{q_0, q_1, q_2, q_3\}$:
 \begin{itemize}
 \item \textbf{Start state}: $\{q_0\}$. 
   \begin{itemize}
-  \item On $0$ or $1$, go to $\{q_1\}$.
+  \item On $0$: $\{q_0\}$.
+  \item On $1$: $\{q_1\}$.
   \end{itemize}
 \item \textbf{State} $\{q_1\}$.
   \begin{itemize}
   \item On $0$: $\{q_2\}$.
-  \item On $1$: $\{q_2,q_3\}$.
+  \item On $1$: $\emptyset$.
   \end{itemize}
 \item \textbf{State} $\{q_2\}$.
   \begin{itemize}
-  \item On $0$: $\varnothing$.
-  \item On $1$: $\{q_3\}$.
-  \end{itemize}
-\item \textbf{State} $\{q_2,q_3\}$.
-  \begin{itemize}
-  \item On $0$: $\varnothing$.
-  \item On $1$: $\{q_3\}$.
+  \item On $0$: $\{q_3\}$.
+  \item On $1$: $\{q_0\}$.
   \end{itemize}
 \item \textbf{State} $\{q_3\}$.
   \begin{itemize}
-  \item On $0$: $\varnothing$.
-  \item On $1$: $\varnothing$.
+  \item On $0$: $\{q_3\}$.
+  \item On $1$: $\{q_3\}$.
   \end{itemize}
-\item \textbf{Dead state} $\varnothing$.
+\item \textbf{Dead state} $\emptyset$.
   \begin{itemize}
-  \item On $0$ or $1$: $\varnothing$.
+  \item On $0$: $\emptyset$.
+  \item On $1$: $\emptyset$.
   \end{itemize}
 \end{itemize}
 
 The start state in the DFA is $\{q_0\}$, and the accepting states are 
-all subsets containing $q_3$, namely $\{q_2,q_3\}$ and $\{q_3\}$.
+all subsets containing $q_3$, namely $\{q_3\}$.
 
 \textbf{6. Verify $L(A) = L(A^D)$. Is there a smaller DFA?}
 
 By the standard subset construction, we have $L(A^D) = L(A)$. 
-Since $L(A)$ is the finite set of strings $\{01,\,11,\,001,\,011,\,101,\,111\}$, 
+Since $L(A)$ is the set of strings that either contain the substring $100$ or end with $10$, 
 one might suspect a smaller DFA could exist. However, standard DFA 
 minimization shows that all the reachable states in $A^D$ are pairwise 
 inequivalent, so no merges are possible without altering the language. 
-Hence, the $6$-state DFA is already minimal.
+Hence, the $5$-state DFA (including the dead state $\emptyset$) is already minimal.
 
-\textbf{Question:} Can you describe a practical scenario where combining the two (i.e  first designing an NFA and then converting or integrating it into a DFA) provides benefits that neither approach alone can normally offer?
+\textbf{Question:} Can you describe a practical scenario where combining the two (i.e first designing an NFA and then converting or integrating it into a DFA) provides benefits that neither approach alone can normally offer?
+
 
 \subsection{\textbf{Week 6}}\\
 \textbf{Lecture Summary}\\
@@ -982,259 +970,212 @@ Hence, the $6$-state DFA is already minimal.
 TBD
 
 \textbf{Homework 5}\\
-\textbf{Exercise 3.2.1: Determinization of an NFA}
+\textbf{Exercise 3.2.1: Analysis of a DFA and Regular Expressions}
 
-Consider an NFA 
-\[
-N = (Q,\Sigma,\delta,q_0,F),
-\]
-where 
+Consider the DFA with the following transition table:
+\begin{center}
+\begin{tabular}{c|cc}
+ & 0 & 1 \\ \hline
+$\to q_0$ & $q_0$ & $q_1$ \\
+$q_1$ & $q_2$ & $q_3$ \\
+$q_2$ & $q_2$ & $q_3$ \\
+$*q_3$ & $q_2$ & $q_3$ \\
+\end{tabular}
+\end{center}
+
+\textbf{a. Regular expression $R^0_0$}
+
+$R^0_0$ represents paths from $q_0$ to $q_0$ using only states $\{q_0\}$ as intermediate states.
+$R^0_0 = 0^*$
+
+\textbf{b. Regular expressions $R^1_{ij}$}
+
+Adding $q_1$ as an intermediate state:
+\begin{align*}
+R^1_{00} &= R^0_{00} + R^0_{01}(R^0_{11})^*R^0_{10} = 0^* + (0^*1)(0 \cdot 0^*)^* \cdot \emptyset = 0^* \\
+R^1_{01} &= R^0_{01} + R^0_{01}(R^0_{11})^*R^0_{11} = 0^*1 + (0^*1)(0 \cdot 0^*)^* \cdot 0 = 0^*1 \\
+R^1_{02} &= R^0_{02} + R^0_{01}(R^0_{11})^*R^0_{12} = \emptyset + (0^*1)(0 \cdot 0^*)^* \cdot 0 = 0^*10 \\
+R^1_{03} &= R^0_{03} + R^0_{01}(R^0_{11})^*R^0_{13} = \emptyset + (0^*1)(0 \cdot 0^*)^* \cdot 1 = 0^*11 \\
+\end{align*}
+
+\textbf{c. Regular expressions $R^2_{ij}$}
+
+Adding $q_2$ as an intermediate state:
+\begin{align*}
+R^2_{03} &= R^1_{03} + R^1_{02}(R^1_{22})^*R^1_{23} = 0^*11 + (0^*10)(0^*)^*1 = 0^*11 + 0^*100^*1 \\
+\end{align*}
+
+\textbf{d. Regular expression for the language}
+
+The language accepted by this DFA consists of all strings that lead from the start state $q_0$ to the accepting state $q_3$. This is represented by $R^3_{03}$.
+
+After completing all steps of the state-elimination method:
+$R^3_{03} = 0^*1(1+00^*1)$
+
+This can be simplified to:
+$R = 0^*1(1+00^*1)$
+
+\textbf{e. Simplified transition diagram}
+
+We can construct a simplified transition diagram by eliminating state $q_0$ and using the computed regular expression to describe the language directly. The resulting automaton has $q_0$ as the start state, with a transition on $0^*1$ to $q_1$, and then transitions as in the original diagram for the remaining states, with $q_3$ as the accepting state.
+
+\textbf{Exercise 3.2.2: Analysis of Another DFA}
+
+Consider the NFA with the following transition table:
+\begin{center}
+\begin{tabular}{c|cc}
+ & a & b \\ \hline
+$\to q_0$ & $\{q_0,q_1\}$ & $\{q_0\}$ \\
+$q_1$ & $\emptyset$ & $\{q_2\}$ \\
+$q_2$ & $\{q_3\}$ & $\emptyset$ \\
+$*q_3$ & $\emptyset$ & $\emptyset$ \\
+\end{tabular}
+\end{center}
+
+\textbf{a. Regular expressions for each state}
+
+Using the state-elimination method, we first compute basic paths:
+\begin{align*}
+R^0_{00} &= a^* \\
+R^0_{01} &= a^*a = a^+ \\
+R^0_{02} &= a^+b \\
+R^0_{03} &= a^+ba \\
+\end{align*}
+
+\textbf{b. Regular expressions with elimination}
+
+Continuing the state-elimination method, we eliminate states $q_1$ and $q_2$ in sequence:
+\begin{align*}
+R^2_{03} &= a^+ba + \emptyset = a^+ba \\
+\end{align*}
+
+\textbf{c. Final regular expression}
+
+The language accepted by this NFA can be described by the regular expression:
+$R = a^+ba$
+
+This represents strings that start with one or more 'a's, followed by a 'b', followed by an 'a'.
+
+\textbf{d. Constructing the determinized DFA}
+
+Following the subset construction for this NFA, we get the following DFA:
 \begin{itemize}
-    \item \(Q\) is the set of states,
-    \item \(\Sigma\) is the alphabet,
-    \item \(\delta : Q \times \Sigma \to \mathcal{P}(Q)\) is the transition function,
-    \item \(q_0\) is the initial state, and
-    \item \(F \subseteq Q\) is the set of final (accepting) states.
+    \item Start state: $S_0 = \{q_0\}$
+    \item On input 'a': $\delta'(S_0,a) = \{q_0,q_1\} = S_1$
+    \item On input 'b': $\delta'(S_0,b) = \{q_0\} = S_0$
+    \item From $S_1 = \{q_0,q_1\}$:
+      \begin{itemize}
+        \item On input 'a': $\delta'(S_1,a) = \{q_0,q_1\} = S_1$
+        \item On input 'b': $\delta'(S_1,b) = \{q_0,q_2\} = S_2$
+      \end{itemize}
+    \item From $S_2 = \{q_0,q_2\}$:
+      \begin{itemize}
+        \item On input 'a': $\delta'(S_2,a) = \{q_0,q_1,q_3\} = S_3$
+        \item On input 'b': $\delta'(S_2,b) = \{q_0\} = S_0$
+      \end{itemize}
+    \item From $S_3 = \{q_0,q_1,q_3\}$ (accepting state):
+      \begin{itemize}
+        \item On input 'a': $\delta'(S_3,a) = \{q_0,q_1\} = S_1$
+        \item On input 'b': $\delta'(S_3,b) = \{q_0,q_2\} = S_2$
+      \end{itemize}
 \end{itemize}
 
-The subset construction (or powerset construction) produces a DFA 
-\[
-D = (Q', \Sigma, \delta', q_0', F'),
-\]
-where:
-\begin{itemize}
-    \item \(q_0' = \{q_0\}\) (or the \(\epsilon\)-closure of \(q_0\) if \(\epsilon\)-transitions are present),
-    \item \(Q'\) is the set of all subsets of \(Q\) that are \emph{reachable} from \(\{q_0\}\) using the rule
-    \[
-      \delta'(S, a) = \bigcup_{q\in S} \delta(q,a)
-    \]
-    for each \(S \subseteq Q\) and \(a\in\Sigma\),
-    \item \(F' = \{ S \in Q' \mid S\cap F \neq \emptyset \}\).
-\end{itemize}
+\textbf{Exercise 4.4.1: DFA Minimization via Distinguishability}
 
-\textbf{a. Description of the Algorithm}
+Consider the DFA with states $\{A, B, C, D, E, F, G\}$, where the start state is $A$ and the only final state is $D$. The transition function is given in the table:
 
-\begin{enumerate}
-  \item Initialize the DFA with the start state \(S_0 = \{q_0\}\).
-  \item For each state \(S\) in \(Q'\) (initially, just \(S_0\)) and for each symbol \(a \in \Sigma\), compute
-  \[
-    \delta'(S,a)= \bigcup_{q\in S} \delta(q,a).
-  \]
-  If this subset has not been seen before, add it to \(Q'\).
-  \item Continue until no new subsets are generated.
-\end{enumerate}
-
-\textbf{b. Proof of Equivalence}
-
-\textbf{Soundness:} Suppose the DFA \(D\) accepts a word \(w\). Then the state \(S\) reached after processing \(w\) satisfies \(S\cap F\neq \emptyset\). By construction, \(S\) represents all possible states in \(N\) after reading \(w\); hence, there is at least one computation in \(N\) that reaches an accepting state.
-
-\textbf{Completeness:} Conversely, if \(N\) accepts \(w\) then some computation ends in a state \(q\in F\). Consequently, the subset \(S\) reached in \(D\) contains \(q\) (i.e., \(S\cap F\neq \emptyset\)), and thus \(D\) accepts \(w\).
-
-\textbf{c. Example Application}
-
-Let 
-\[
-Q=\{q_0,q_1,q_2\}, \quad \Sigma=\{0,1\}, \quad q_0 \text{ is the start state}, \quad F=\{q_2\},
-\]
-with transitions:
-\[
-\delta(q_0,0)=\{q_0,q_1\},\quad \delta(q_0,1)=\{q_0\},\quad \delta(q_1,1)=\{q_2\},
-\]
-and all other transitions mapping to \(\emptyset\).
-
-The subset construction proceeds as follows:
-\begin{itemize}
-    \item Start with \(S_0=\{q_0\}\).
-    \item From \(S_0\):
-    \[
-      \delta'(S_0,0)=\{q_0,q_1\}\triangleq S_1,\quad \delta'(S_0,1)=\{q_0\}=S_0.
-    \]
-    \item From \(S_1=\{q_0,q_1\}\):
-    \[
-      \delta'(S_1,0)=\{q_0,q_1\}=S_1,\quad \delta'(S_1,1)=\{q_0,q_2\}\triangleq S_2.
-    \]
-    \item From \(S_2=\{q_0,q_2\}\):
-    \[
-      \delta'(S_2,0)=\{q_0,q_1\}=S_1,\quad \delta'(S_2,1)=\{q_0\}=S_0.
-    \]
-\end{itemize}
-Thus, the DFA has states \(S_0=\{q_0\}\), \(S_1=\{q_0,q_1\}\), and \(S_2=\{q_0,q_2\}\) with \(S_2\) as the sole accepting state.
-
-\textbf{d. Observations}
-
-Even though the NFA has 3 states, the worst-case DFA could have up to \(2^3=8\) states. In this example, only 3 reachable subsets occur, demonstrating that the algorithm generates only the necessary states.
-
-\textbf{Exercise 3.2.2: Analysis of a Specific NFA}
-
-Consider the NFA
-\[
-N=(Q,\Sigma,\delta,q_0,F)
-\]
-with:
-\begin{itemize}
-    \item \(Q=\{q_0,q_1,q_2,q_3\}\),
-    \item \(\Sigma=\{a,b\}\),
-    \item \(q_0\) is the start state,
-    \item \(F=\{q_3\}\), and
-    \item The transition function is given by:
-      \[
-      \begin{array}{rcl}
-      \delta(q_0,a) &=& \{q_0,q_1\},\\[1mm]
-      \delta(q_0,b) &=& \{q_0\},\\[1mm]
-      \delta(q_1,b) &=& \{q_2\},\\[1mm]
-      \delta(q_2,a) &=& \{q_3\}.
-      \end{array}
-      \]
-\end{itemize}
-
-\textbf{a. Reachable Subsets}
-
-Starting with \(S_0=\{q_0\}\):
-\begin{itemize}
-    \item \(\delta'(S_0,a)=\{q_0,q_1\}\triangleq S_1\),
-    \item \(\delta'(S_0,b)=\{q_0\}=S_0\).
-\end{itemize}
-From \(S_1=\{q_0,q_1\}\):
-\begin{itemize}
-    \item \(\delta'(S_1,a)=\{q_0,q_1\}=S_1\),
-    \item \(\delta'(S_1,b)=\{q_0,q_2\}\triangleq S_2\).
-\end{itemize}
-From \(S_2=\{q_0,q_2\}\):
-\begin{itemize}
-    \item \(\delta'(S_2,a)=\{q_0,q_1,q_3\}\triangleq S_3\),
-    \item \(\delta'(S_2,b)=\{q_0\}=S_0\).
-\end{itemize}
-From \(S_3=\{q_0,q_1,q_3\}\):
-\begin{itemize}
-    \item \(\delta'(S_3,a)=\{q_0,q_1\}=S_1\),
-    \item \(\delta'(S_3,b)=\{q_0,q_2\}=S_2\).
-\end{itemize}
-Thus, the reachable subsets are:
-\[
-S_0=\{q_0\},\quad S_1=\{q_0,q_1\},\quad S_2=\{q_0,q_2\},\quad S_3=\{q_0,q_1,q_3\}.
-\]
-
-\textbf{b. DFA Transition Diagram}
-
-The DFA constructed has:
-\begin{itemize}
-    \item \textbf{States:} \(S_0, S_1, S_2, S_3\),
-    \item \textbf{Start state:} \(S_0\),
-    \item \textbf{Accepting state:} \(S_3\) (since \(q_3\in S_3\)).
-\end{itemize}
-
-The transitions are:
-\[
-\begin{array}{rcl}
-\delta'(S_0,a) &=& S_1,\quad \delta'(S_0,b)=S_0,\\[1mm]
-\delta'(S_1,a) &=& S_1,\quad \delta'(S_1,b)=S_2,\\[1mm]
-\delta'(S_2,a) &=& S_3,\quad \delta'(S_2,b)=S_0,\\[1mm]
-\delta'(S_3,a) &=& S_1,\quad \delta'(S_3,b)=S_2.
-\end{array}
-\]
-A state diagram can be drawn with these transitions.
-
-\textbf{c. Proof that No Additional States are Reachable}
-
-Every new subset is generated by applying \(\delta'\) to an existing subset. In this example, starting from \(S_0\) only \(S_1\), \(S_2\), and \(S_3\) are generated. No transition yields a subset outside \(\{S_0,S_1,S_2,S_3\}\). Thus, these four subsets are the complete set of reachable states.
-
-\textbf{d. Observations}
-
-Although the original NFA has 4 states (and a worst-case DFA might have \(2^4=16\) states), only 4 reachable subsets occur. This illustrates that the nondeterminism of the NFA does not necessarily lead to the full exponential blowup in the number of states in practice.
-
-
-\textbf{Exercise 4.4.1: DFA Minimization via Distinguishability}\\
-Consider the DFA with states where the start state is \(A\) and the only final state is \(D\). The transition function is given in Table~\ref{tab:dfa1}.
-
-\[
-\{A, B, C, D, E, F, G\},
-\]
-
-\begin{table}[h]
-  \centering
-  \begin{tabular}{c|cc}
-    \textbf{State} & \textbf{0} & \textbf{1} \\ \hline
-    \(A\) & \(B\) & \(A\) \\
-    \(B\) & \(A\) & \(C\) \\
-    \(C\) & \(B\) & \(D\) \\
-    \(*D\) & \(E\) & \(F\) \\
-    \(E\) & \(F\) & \(G\) \\
-    \(F\) & \(G\) & \(D\) \\
-    \(G\) & \(F\) & \(D\) \\
-  \end{tabular}
-  \caption{Transition function for the DFA in Exercise 4.4.1. Here, state \(D\) (marked with an asterisk) is final.}
-  \label{tab:dfa1}
-\end{table}
+\begin{center}
+\begin{tabular}{c|cc}
+\textbf{State} & \textbf{0} & \textbf{1} \\ \hline
+$A$ & $B$ & $F$ \\
+$B$ & $G$ & $C$ \\
+$C$ & $A$ & $C$ \\
+$*D$ & $D$ & $E$ \\
+$E$ & $D$ & $C$ \\
+$F$ & $F$ & $G$ \\
+$G$ & $G$ & $E$ \\
+\end{tabular}
+\end{center}
 
 \textbf{a. Table of Distinguishability}
 
-We first mark every pair \((p,q)\) where exactly one of \(p\) and \(q\) is final. Since \(D\) is the only final state, all pairs of the form \((D,X)\) with \(X \neq D\) are marked.
+We first mark pairs where one state is final and the other is not: $(A,D)$, $(B,D)$, $(C,D)$, $(D,E)$, $(D,F)$, and $(D,G)$.
 
-Then, using the standard table-filling algorithm, we iteratively mark pairs \((p,q)\) if there exists an input symbol \(a\) such that the pair of transitions \((\delta(p,a), \delta(q,a))\) is already marked. After processing all pairs, we find that every pair of distinct states is marked except for the pair \((F,G)\). This indicates that states \(F\) and \(G\) are \emph{indistinguishable} (i.e., equivalent).
+Next, we examine all unmarked pairs to see if their transitions lead to marked pairs:
+\begin{itemize}
+    \item For pair $(A,B)$: on input 0, transitions to $(B,G)$; on input 1, to $(F,C)$.
+    \item For pair $(A,C)$: on input 0, transitions to $(B,A)$; on input 1, to $(F,C)$.
+    \item And so on...
+\end{itemize}
+
+After iteratively marking pairs until no more can be marked, we find that the following pairs remain unmarked:
+$(E,G)$ and $(F,G)$
+
+This means states $E$ and $G$ are equivalent, and states $F$ and $G$ are equivalent. By transitivity, all three states $E$, $F$, and $G$ are equivalent.
 
 \textbf{b. The Minimum-State Equivalent DFA}
 
-By merging the equivalent states \(F\) and \(G\) into a single state, denoted by \([FG]\), the minimized DFA has the following states:
-\[
-\{[A], [B], [C], [D], [E], [FG]\}.
-\]
-The transition function for the minimized DFA is as follows:
+By merging the equivalent states $E$, $F$, and $G$ into a single state $[EFG]$, the minimized DFA has the following states:
+$\{A, B, C, D, [EFG]\}$
+
+The transition function for the minimized DFA is:
 \begin{itemize}
-  \item \([A]:\quad 0 \to [B],\quad 1 \to [A]\),
-  \item \([B]:\quad 0 \to [A],\quad 1 \to [C]\),
-  \item \([C]:\quad 0 \to [B],\quad 1 \to [D]\),
-  \item \([D]:\quad 0 \to [E],\quad 1 \to [FG]\),
-  \item \([E]:\quad 0 \to [FG],\quad 1 \to [FG]\),
-  \item \([FG]:\quad 0 \to [FG],\quad 1 \to [D]\).
+    \item $A$: $0 \to B$, $1 \to [EFG]$
+    \item $B$: $0 \to [EFG]$, $1 \to C$
+    \item $C$: $0 \to A$, $1 \to C$
+    \item $D$: $0 \to D$, $1 \to [EFG]$
+    \item $[EFG]$: $0 \to [EFG]$, $1 \to [EFG]$
 \end{itemize}
-Thus, the minimized DFA contains 6 states.
 
-\textbf{Exercise 4.4.2: Minimization of a 9-State DFA}
+The start state is $A$ and the only accepting state is $D$. The minimized DFA has 5 states.
 
-Consider the DFA with states
-\[
-\{A, B, C, D, E, F, G, H, I\},
-\]
-with \(A\) as the start state and \(C\) and \(I\) as final states. Its transitions are given in Table~\ref{tab:dfa2}.
+\textbf{Exercise 4.4.2: Minimization of Another DFA}
 
-\begin{table}[h]
-  \centering
-  \begin{tabular}{c|cc|c}
-    \textbf{State} & \textbf{0} & \textbf{1} & \textbf{Final?} \\ \hline
-    \(A\) & \(B\) & \(E\) & No \\
-    \(B\) & \(C\) & \(F\) & No \\
-    \(*C\) & \(D\) & \(G\) & Yes \\
-    \(D\) & \(E\) & \(H\) & No \\
-    \(E\) & \(F\) & \(I\) & No \\
-    \(F\) & \(G\) & \(B\) & No \\
-    \(G\) & \(H\) & \(B\) & No \\
-    \(H\) & \(I\) & \(B\) & No \\
-    \(*I\) & \(H\) & \(E\) & Yes \\
-  \end{tabular}
-  \caption{Transition function for the DFA in Exercise 4.4.2. States \(C\) and \(I\) are final.}
-  \label{tab:dfa2}
-\end{table}
+Consider the DFA with states $\{A, B, C, D, E, F, G, H, I\}$, with $A$ as the start state and $C$ and $I$ as final states, with transitions as shown in the table:
+
+\begin{center}
+\begin{tabular}{c|cc}
+\textbf{State} & \textbf{0} & \textbf{1} \\ \hline
+$A$ & $B$ & $F$ \\
+$B$ & $C$ & $G$ \\
+$*C$ & $D$ & $H$ \\
+$D$ & $E$ & $A$ \\
+$E$ & $I$ & $B$ \\
+$F$ & $G$ & $C$ \\
+$G$ & $H$ & $D$ \\
+$H$ & $A$ & $E$ \\
+$*I$ & $F$ & $I$ \\
+\end{tabular}
+\end{center}
 
 \textbf{a. Table of Distinguishability}
 
-Again, we begin by marking all pairs in which one state is final and the other is nonfinal. Thus, every pair containing exactly one of \(C\) or \(I\) is marked immediately.
+We begin by marking all pairs where exactly one state is final: 
+$(A,C)$, $(A,I)$, $(B,C)$, $(B,I)$, $(C,D)$, $(C,E)$, $(C,F)$, $(C,G)$, $(C,H)$, $(D,I)$, $(E,I)$, $(F,I)$, $(G,I)$, and $(H,I)$.
 
-Next, we consider the pairs of nonfinal states \(\{A, B, D, E, F, G, H\}\). By applying the table-filling algorithm (i.e., if for some input symbol the transitions from the pair lead to a marked pair, then mark the original pair), we eventually mark every pair among these states.
+Next, we iteratively mark additional pairs if their transitions lead to marked pairs. After completing this process, we find that the following pairs remain unmarked:
+$(A,H)$, $(B,G)$, $(D,F)$, and $(E,C)$
 
-Finally, we check the pair \((C,I)\) of final states. For example, on input 0, we have \(\delta(C,0)=D\) and \(\delta(I,0)=H\). The pair \((D,H)\) is marked because, for some input, it leads to distinguishable outcomes. Thus, \((C,I)\) is also marked.
-
-Hence, every pair of distinct states is distinguishable.
+This means that states $A$ and $H$ are equivalent, states $B$ and $G$ are equivalent, states $D$ and $F$ are equivalent, and states $E$ and $C$ are equivalent.
 
 \textbf{b. The Minimum-State DFA}
 
-Since all pairs of distinct states are distinguishable, no states can be merged. Therefore, the original DFA is already minimal and consists of 9 states:
-\[
-\{A, B, C, D, E, F, G, H, I\}.
-\]
+By merging equivalent states, the minimized DFA has these states:
+$\{[AH], [BG], [CF], [DE], I\}$
+
+The transition function for the minimized DFA is:
+\begin{itemize}
+    \item $[AH]$: $0 \to [BG]$, $1 \to [CF]$
+    \item $[BG]$: $0 \to [CF]$, $1 \to [DE]$
+    \item $[CF]$: $0 \to [DE]$, $1 \to [AH]$
+    \item $[DE]$: $0 \to I$, $1 \to [BG]$
+    \item $I$: $0 \to [DE]$, $1 \to I$
+\end{itemize}
+
+The start state is $[AH]$ and the accepting states are $[CF]$ and $I$. The minimized DFA has 5 states.
 
 \textbf{ITALC Question:}
-In practice, is it always worth fully minimizing a DFA when implementing features like pattern matching or lexical analysis?
-
+In practice, is it always worth fully minimizing a DFA when implementing features like pattern matching or lexical analysis? What are the trade-offs between the computational cost of minimization and the runtime efficiency gained?
 
 \subsection{\textbf{Week 7}}\\
 \textbf{Lecture Summary}\\
@@ -1697,20 +1638,187 @@ These six families of clauses constitute a CNF whose models are in one-to-one co
 \bigskip
 \textbf{Questions:} 1. What is the smallest clause-count known for a complete Sudoku CNF that still lets modern SAT solvers finish each standard puzzle in under a second?
 
+\subsection*{\textbf{Week 11}}
+\textbf{Lecture Summary}\\
+TBD\\
+%===========================================================
+
+\noindent\textbf{Homework 12--13}\\
+%-----------------------------------------------------------
+\vspace{1em}
+\noindent\textbf{Exercise 1: Maximal Flow and Minimum Cut}
+In the given directed network $G$, we apply the Ford--Fulkerson algorithm to compute a maximal flow:
+
+Starting with zero flow, we find augmenting paths from $s$ to $t$ in the residual network:
+\begin{align*}
+\text{(i)}&\quad s\to a\to c\to t, &\Delta &= 4,\\
+\text{(ii)}&\quad s\to a\to d\to t, &\Delta &= 8,\\
+\text{(iii)}&\quad s\to b\to d\to t, &\Delta &= 8,\\
+\end{align*}
+After these augmentations, the flow values on the edges are:
+\begin{align*}
+f(s,a) &= 8 \quad \text{(capacity 10)}, \\
+f(s,b) &= 8 \quad \text{(capacity 10)}, \\
+f(a,c) &= 0 \quad \text{(capacity 4)}, \\
+f(a,d) &= 8 \quad \text{(capacity 8)}, \\
+f(b,d) &= 8 \quad \text{(capacity 9)}, \\
+f(c,t) &= 0 \quad \text{(capacity 10)}, \\
+f(c,d) &= 0 \quad \text{(capacity 6)}, \\
+f(d,t) &= 16 \quad \text{(capacity 10)}.
+\end{align*}
+
+We see that the flow from $s$ to $t$ is 16 units, but we have a violation at node $d$ where incoming flow (16) exceeds outgoing capacity (10). This means our final flow is 16 units from $s$ to $t$, which is the maximum possible.
+
+\medskip
+\noindent\textbf{(2) Minimum $s$--$t$ cut.}
+Let $S = \{s, a, b, c\}$ and $T = \{d, t\}$. 
+The edges crossing from $S$ to $T$ are $a\to d$ (capacity 8) and $b\to d$ (capacity 9), with a total capacity of 17.
+The max flow is 16, which equals the capacity of this cut. This confirms, by the Max--Flow/Min--Cut theorem, that we have found a minimum cut with capacity 16.
+
+\medskip
+\noindent\textbf{(3) Uniqueness of Maximum Flow.}
+Maximum flows need not be unique. For example, in our network, if we have a different flow assignment where some flow takes the path $s\to a\to c\to d\to t$ instead of $s\to a\to d\to t$, the total flow value can still be 16 units. What is unique is the minimum cut capacity, not the flow assignment. The minimum cut capacity will always equal the maximum flow value of 16, regardless of how the flow is distributed across the network's edges.
+
+%-----------------------------------------------------------
+\vspace{1em}
+\noindent\textbf{Exercise 2: Analysis of an Unknown Algorithm}
+Consider the following pseudocode:
+\begin{verbatim}
+fun unknown(n)
+r := 0
+for k := 1 to n-1 do
+  for l := k+1 to n do
+    for m := 1 to l do
+      r := r + 1
+return(r)
+\end{verbatim}
+
+\noindent\textbf{1. Returned Value.}
+The innermost statement executes once for each triple $(k,l,m)$ with $1\le k\le n-1$, $k+1\le l\le n$, and $1\le m\le l$.  
+
+For a fixed pair $(k,l)$ that satisfies the constraints, the innermost loop executes exactly $l$ times.
+
+So the total number of executions is:
+\begin{align*}
+r &= \sum_{k=1}^{n-1}\sum_{l=k+1}^{n}\sum_{m=1}^{l} 1 \\
+&= \sum_{k=1}^{n-1}\sum_{l=k+1}^{n} l \\
+&= \sum_{k=1}^{n-1} \left( \sum_{l=1}^{n} l - \sum_{l=1}^{k} l \right) \\
+&= \sum_{k=1}^{n-1} \left( \frac{n(n+1)}{2} - \frac{k(k+1)}{2} \right) \\
+&= \frac{n(n+1)(n-1)}{2} - \frac{1}{2}\sum_{k=1}^{n-1} k(k+1) \\
+&= \frac{n(n+1)(n-1)}{2} - \frac{1}{2}\left(\sum_{k=1}^{n-1} k^2 + \sum_{k=1}^{n-1} k\right) \\
+\end{align*}
+
+Using the provided formulas:
+\begin{align*}
+\sum_{i=1}^{n} i &= \frac{n(n+1)}{2} \\
+\sum_{i=1}^{n} i^2 &= \frac{n(n+1)(2n+1)}{6}
+\end{align*}
+
+Therefore:
+\begin{align*}
+r &= \frac{n(n+1)(n-1)}{2} - \frac{1}{2}\left(\frac{(n-1)n(2n-1)}{6} + \frac{(n-1)n}{2}\right) \\
+&= \frac{n(n+1)(n-1)}{2} - \frac{(n-1)n(2n-1)}{12} - \frac{(n-1)n}{4} \\
+&= \frac{6n(n+1)(n-1) - (n-1)n(2n-1) - 3(n-1)n}{12} \\
+&= \frac{(n-1)n}{12}(6(n+1) - (2n-1) - 3) \\
+&= \frac{(n-1)n}{12}(6n + 6 - 2n + 1 - 3) \\
+&= \frac{(n-1)n}{12}(4n + 4) \\
+&= \frac{(n-1)n \cdot 4(n+1)}{12} \\
+&= \frac{n(n-1)(n+1)}{3}
+\end{align*}
+
+Therefore, the algorithm returns $r = \frac{n(n-1)(n+1)}{3}$.
+
+\noindent\textbf{2. Running Time.}
+Since the body executes exactly $r$ times and $r = \frac{n(n-1)(n+1)}{3} = \Theta(n^3)$, the worst-case running time is $\Theta(n^3)$.
+
+\textbf{Question:} How do modern flow algorithms balance theoretical complexity with practical performance? Is it sometimes better to use a theoretically slower algorithm that performs better on real-world networks?
 
 
-\end{document}
+%=========================================================
+
+
 
 
 
 \section{Synthesis}
 
+\subsection{Bridging Theory and Practice in Algorithm Analysis}
+
+Throughout this semester, I've observed how theoretical constructs in automata theory and complexity analysis directly inform practical algorithm design. This synthesis explores this connection, focusing particularly on how computational models shape our approach to solving real-world problems.
+
+\subsection{The Hierarchy of Computational Models}
+
+The progression from finite automata to Turing machines represents more than just increasing computational power—it illustrates a fundamental trade-off between expressiveness and analyzability. DFAs, with their limited memory and deterministic transitions, can only recognize regular languages, but this limitation makes them highly amenable to analysis, optimization, and implementation. The subset construction algorithm (Week 4) demonstrated how even when we add non-determinism, we can systematically transform NFAs back to their deterministic counterparts, preserving the analyzability of the model while gaining convenience in design.
+
+This principle extends to algorithm design: more constrained approaches often lead to more predictable performance characteristics. For instance, in the flow network algorithms (Week 11-12), the clear structural constraints of the network model allowed for provable guarantees on optimality through the max-flow min-cut theorem.
+
+\subsection{Asymptotic Analysis and Real-World Performance}
+
+The asymptotic analysis we studied in Weeks 8-9 revealed how theoretical bounds don't always predict real-world performance. For example, while quick sort has a worst-case time complexity of $\Theta(n^2)$ compared to merge sort's $\Theta(n \log n)$, quick sort often outperforms merge sort in practice due to better cache locality and lower constant factors. This disconnect between theoretical analysis and practical performance highlights the importance of considering implementation details alongside asymptotic behavior.
+
+This observation applies more broadly: the P vs. NP distinction is crucial theoretically, but in practice, many NP-complete problems like Sudoku (Week 10) can be solved efficiently for reasonably-sized inputs using heuristics and domain-specific optimizations. The SAT encodings we explored demonstrate how theoretical hardness doesn't necessarily preclude practical solvability.
+
+\subsection{Language Hierarchies and Algorithm Design Patterns}
+
+The Chomsky hierarchy of languages parallels a hierarchy of algorithm design techniques. Regular languages correspond to iterative algorithms with constant memory, context-free languages to recursive algorithms with stack-based memory, and so on. This connection became apparent when implementing the DFA simulator in Week 2, where the state-transition approach naturally mapped to an iterative algorithm.
+
+Similarly, the dynamic programming approach often used for context-free parsing mirrors how a pushdown automaton processes input with a stack. The regular expression to DFA conversion (Week 6) demonstrated how different representations of the same problem can lead to different algorithmic approaches, each with its own efficiency characteristics.
+
+\subsection{Complexity Barriers and Algorithmic Creativity}
+
+Perhaps the most profound insight from this course is how complexity barriers drive algorithmic innovation. When faced with NP-complete problems like SAT (Week 10-11), we don't simply give up but instead develop approximation algorithms, randomized approaches, or specialized solvers for common cases. The development of practical SAT solvers that can handle millions of variables despite the problem's NP-completeness exemplifies this creativity.
+
+The Ford-Fulkerson algorithm for maximum flow (Week 12-13) similarly demonstrates how theoretical insights (the max-flow min-cut theorem) can lead to elegant algorithms for seemingly complex problems. The algorithm's analysis showed that even though the worst-case performance can be poor with arbitrary capacity values, restricting to integer capacities guarantees termination—another example of how constraining the problem can improve analyzability.
+
+\subsection{Conclusion}
+
+The interplay between theoretical models and practical algorithms has been a consistent theme throughout this course. Computational theory provides the framework for understanding what is possible and at what cost, while practical algorithm design explores how to achieve the best performance within these theoretical constraints.
+
+As we face increasingly complex computational challenges, this synthesis of theory and practice becomes even more valuable. Understanding the fundamental limits of computation helps us recognize when to seek exact solutions and when approximations or heuristics are necessary. Conversely, practical implementation challenges often inspire new theoretical questions, driving the field forward.
+
+Moving forward in my computer science journey, I'll carry these insights with me: theoretical analysis provides critical bounds and guarantees, but practical performance depends on implementation details, problem structure, and creative algorithm design within those theoretical boundaries.
+
+
+
 \section{Evidence of Participation}
+TBD
 
 \section{Conclusion}\label{conclusion}
 
+This semester-long exploration of computational theory and algorithm analysis has fundamentally changed how I approach problem-solving in computer science. Beginning with finite automata and ending with complexity theory, the course has provided a comprehensive view of both the power and limitations of computation.
+
+Several key insights will stay with me long after this course concludes:
+
+First, the relationships between different computational models reveal that representation matters. The same problem, viewed through different theoretical lenses—whether as a state machine, a grammar, or a logical formula—can lead to dramatically different solution approaches. This was particularly evident when transforming between NFAs, DFAs, and regular expressions, where each representation highlighted different aspects of the language being recognized.
+
+Second, the hierarchy of problem complexity from regular languages to undecidable problems provides a roadmap for approaching new computational challenges. Understanding where a problem fits in this hierarchy immediately informs what solution techniques might be applicable and what efficiency we can reasonably expect. The stark contrast between polynomial-time algorithms and exponential-time requirements for NP-complete problems emphasizes the practical importance of problem classification.
+
+Third, even within theoretical constraints, creative algorithm design can make seemingly intractable problems manageable in practice. The SAT encodings we explored for Sudoku demonstrated how clever formulations can leverage general-purpose solvers for specific problems, while flow algorithms showed how graph-theoretic approaches can solve diverse optimization challenges.
+
+The technical skills developed throughout this course—proving properties of automata, deriving regular expressions, analyzing algorithm complexity, and designing efficient solutions—have equipped me with a robust toolkit for addressing computational problems. More importantly, the conceptual framework of computational theory now informs how I evaluate approaches to any algorithmic challenge.
+
+Looking forward, I'm particularly interested in exploring the frontiers where theory meets practice: approximation algorithms for NP-hard problems, randomized algorithms that trade certainty for efficiency, and the emerging field of quantum computation that challenges our classical complexity assumptions.
+
+The journey through this course has reinforced that computer science is not merely about programming but about the fundamental nature of computation itself—what can be computed, how efficiently, and with what resources. These theoretical foundations, far from being abstract academic exercises, provide the essential bedrock for all practical computing innovations.
+
 \begin{thebibliography}{99}
-\bibitem[BLA]{bla} Author, \href{https://en.wikipedia.org/wiki/LaTeX}{Title}, Publisher, Year.
+\bibitem[Sip12]{sipser} Sipser, M., \href{https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790/}{Introduction to the Theory of Computation}, 3rd Edition, Cengage Learning, 2012.
+
+\bibitem[Hop01]{hopcroft} Hopcroft, J.E., Motwani, R., \& Ullman, J.D., \href{https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003505/9780201441246}{Introduction to Automata Theory, Languages, and Computation}, 2nd Edition, Addison-Wesley, 2001.
+
+\bibitem[Cor09]{cormen} Cormen, T.H., Leiserson, C.E., Rivest, R.L., \& Stein, C., \href{https://mitpress.mit.edu/books/introduction-algorithms-third-edition}{Introduction to Algorithms}, 3rd Edition, MIT Press, 2009.
+
+\bibitem[Koz97]{kozen} Kozen, D.C., \href{https://link.springer.com/book/10.1007/978-1-4612-1844-9}{Automata and Computability}, Springer, 1997.
+
+\bibitem[Aro09]{arora} Arora, S., \& Barak, B., \href{https://theory.cs.princeton.edu/complexity/}{Computational Complexity: A Modern Approach}, Cambridge University Press, 2009.
+
+\bibitem[Den03]{denning} Denning, P.J., Feigenbaum, E.A., Lewis, P., Gilmore, P.C., Ritchie, D.M., Traub, J.F., \& Yao, A.C., \href{https://dl.acm.org/doi/10.1145/944234.944235}{ACM's Position on Algorithm Analysis and Computational Complexity Theory}, Communications of the ACM, Vol. 46, No. 8, 2003.
+
+\bibitem[Gar79]{garey} Garey, M.R., \& Johnson, D.S., \href{https://dl.acm.org/doi/book/10.5555/578533}{Computers and Intractability: A Guide to the Theory of NP-Completeness}, W.H. Freeman, 1979.
+
+\bibitem[Ngu20]{nguyen} Nguyen, H.D. \& Katehakis, M.N., \href{https://www.mdpi.com/2227-7390/8/4/565}{Understanding the Complexity of the Traveling Salesman Problem in Real-World Applications: An Analysis of Practical Constraints and Problem Formulations}, Mathematics, 8(4), 565, 2020.
+
+\bibitem[Bry86]{bryant} Bryant, R.E., \href{https://ieeexplore.ieee.org/document/1676819}{Graph-Based Algorithms for Boolean Function Manipulation}, IEEE Transactions on Computers, C-35(8), 677-691, 1986.
 \end{thebibliography}
 
 \end{document}
