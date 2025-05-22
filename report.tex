@@ -96,6 +96,8 @@ Throughout this report, each weekly section documents not only the solutions to 
 
 \section{Week by Week}\label{homework}
 
+
+%===========================================================
 \subsection{Week 1}
 \textbf{Lecture Summary}
 
@@ -116,9 +118,13 @@ where:
     \item $F \subseteq Q$ is the set of accepting states.
 \end{itemize}
 
-
+%===========================================================
 
 \subsection{Week 2}
+\textbf{Lecture Summary}
+
+We defined \emph{deterministic finite automata} (DFAs) more formally and proved basic properties: every DFA has exactly one outgoing transition per symbol in $\Sigma$, and DFAs are closed under union, intersection, and complement.  We practiced writing DFAs in code by constructing the transition table and simulation routine.  We concluded with a discussion of the state minimization and Myhill-Nerode equivalence classes.
+
 {\textbf{{Homework 1}}}
 
 \textbf{Problem 1: Characterizing Accepted Sequences}
@@ -218,15 +224,17 @@ The protocol consists of five primary actions: pay, cancel, ship, redeem, and tr
 
 Finite automata prove to be useful for detecting logical flaws in transaction systems, ensuring valid sequences of operations. The chapter serves as an introduction to the application of formal computational models in the security and validation of protocols.
 
+
+%===========================================================
+
+
 \subsection{Week 3}
 \textbf{Lecture Summary}\\
-%Summarize when I get the chance
-TBD\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip
+We showed how to build new automata from old via \emph{union}, \emph{concatenation}, and \emph{Kleene‐star}.  Given DFAs $A$ and $B$, their union DFA simulates both in parallel using the product‐state construction.  Concatenation and star constructions use nondeterministic gadgets (or extra $\varepsilon$–transitions).  We also contrasted NFAs vs.\ DFAs and previewed the subset‐construction for determinization.
 
 
-
-{\textbf{{Homework 2}}}\\
-\textbf{Exercise 2: Implementing DFA Runs}\\
+{\textbf{{Homework 2}}}
+\textbf{Exercise 2: Implementing DFA Runs}
 \begin{center}
 \textbf{DFA $A_1$}
 \begin{tikzpicture}[shorten >=1pt, node distance=2cm, on grid, auto] 
@@ -476,10 +484,12 @@ F &= \{\,q_3\}.
 \end{itemize}
 \bigskip
 
-\subsection{\textbf{Week 4}}\\
+%===========================================================
+
+
+\subsection{Week 4}\\
 \textbf{Lecture Summary}\\
-%Summarize when I get the chance
-We explore the concept of \emph{product automata} and how they can be used to model operations on languages accepted by two deterministic finite automata (DFAs). In particular, we discuss how to construct an automaton that accepts the intersection (or union) of the languages recognized by two given automata.
+We introduced \emph{nondeterministic finite automata} (NFAs), which allow multiple or zero $\delta$–transitions on a given symbol (and $\varepsilon$–moves).  The key theorem: for every NFA there is an equivalent DFA obtained by the subset construction.  We worked through examples, proving that NFAs and DFAs recognize the same class of regular languages.  Efficiency remarks: NFAs can be exponentially smaller, but DFAs run in linear time per input symbol.
 
 \textbf{Homework 3}
 
@@ -810,10 +820,13 @@ Thus, if a state $q$ transitions to itself on every symbol, it remains $q$ under
 In the subset construction for converting an NFA to a DFA, often there is an exponential blow-up in the number of states. Can you propose a scenario for which this blow-up actually happens, and whether there are any strategies or special cases that might mitigate this worst-case behavior?
 
 
-\subsection{\textbf{Week 5}}\\
+
+%===========================================================
+
+\subsection{Week 5}\\
 \textbf{Lecture Summary}\\
-%Summarize when I get the chance
-TBD
+Regular expressions (REs) are an alternative syntax for describing regular languages.  We gave the grammar for REs: union ($+$), concatenation, and star (${}^*$), and showed how to convert any RE into an equivalent NFA via Thompson’s construction.  The reverse (turning a DFA into an RE) was sketched by state‐elimination.  \emph{Programming Assignment 1} (due next week) asks you to implement RE parsing and NFA simulation in code.
+
 
 \textbf{Homework 4}\\
 \textbf{Problem 1: NFA Interpretation}
@@ -964,10 +977,14 @@ Hence, the $5$-state DFA (including the dead state $\emptyset$) is already minim
 \textbf{Question:} Can you describe a practical scenario where combining the two (i.e first designing an NFA and then converting or integrating it into a DFA) provides benefits that neither approach alone can normally offer?
 
 
-\subsection{\textbf{Week 6}}\\
+%===========================================================
+
+
+
+\subsection{Week 6}\\
 \textbf{Lecture Summary}\\
-%Summarize when I get the chance
-TBD
+We studied algorithms to reduce a DFA to its unique \emph{minimal} form, merging “equivalent” states.  Two presentations: (i) partition‐refinement (Hopcroft’s algorithm) and (ii) coarsest‐stable equivalence classes via repeated splitting.  We proved correctness—minimal DFA has the fewest states—and discussed runtime bounds ($O(n\log n)$ for Hopcroft).
+
 
 \textbf{Homework 5}\\
 \textbf{Exercise 3.2.1: Analysis of a DFA and Regular Expressions}
@@ -1177,9 +1194,12 @@ The start state is $[AH]$ and the accepting states are $[CF]$ and $I$. The minim
 \textbf{ITALC Question:}
 In practice, is it always worth fully minimizing a DFA when implementing features like pattern matching or lexical analysis? What are the trade-offs between the computational cost of minimization and the runtime efficiency gained?
 
-\subsection{\textbf{Week 7}}\\
+%===========================================================
+
+
+\subsection{Week 7}\\
 \textbf{Lecture Summary}\\
-TBD
+We introduced the \emph{pumping lemma} for regular languages: any sufficiently long word in a regular language can be split $xyz$ with $|xy|\le p$, $|y|\ge1$, such that $xy^kz$ remains in the language for all $k\ge0$.  This tool is vital for proving non‐regularity (e.g.\ $\{a^n b^n\}$).  Several classic examples (balanced parentheses, palindromes) illustrated how to choose a contradiction.
 
 \textbf{Homework 6}\\
 \textbf{Exercise A:}\\
@@ -1241,9 +1261,16 @@ TBD
         \(L_{3} = \{\langle M,w,k\rangle \mid M \text{ halts on } w \text{ in } \le k \text{ steps}\}\)  
         remain decidable, or does the change in encoding alter its classification?  
 
-\subsection{\textbf{Week 8}}\\
+
+
+%===========================================================
+
+
+
+\subsection{Week 8}\\
 \textbf{Lecture Summary}\\
-TBD
+Expanded our computational model to \emph{Turing machines} (TMs): infinite tape, read/write head, state‐transition function including write and move actions.  Defined \emph{decidable} vs.\ \emph{recognizable} languages.  Showed how any programming language can be simulated by a TM and proved that the Halting problem is undecidable via diagonalization.  
+
 
 \textbf{Homework 7}\\
 \textbf{Exercise 1: Decidability}\\
@@ -1299,10 +1326,13 @@ For each statement, indicate True/False and give justification.
 \textbf{Question: } For an r.e.\ language \(L\) we know that \(L^{*}\) is r.e.; what about the intersection  
         \(L \cap \overline{L}\)? is it always decidable, and how does this relate to the closure results we discussed?
 
+%===========================================================
 
-\subsection{\textbf{Week 9}}\\
+
+\subsection{Week 9}\\
 \textbf{Lecture Summary}
-\\Unless stated otherwise, every variable ranges over the naturals $\mathbb N=\{1,2,3,\dots\}$ and $\log$ denotes the natural logarithm.
+We explored classic undecidable problems beyond Halting: validity of first‐order logic, PCP (Post’s Correspondence Problem), and emptiness of context‐free grammars.  Reductions between problems were formalized, illustrating how undecidability “propagates.”  Rice’s theorem was stated and proved: any non‐trivial semantic property of programs is undecidable. Unless stated otherwise, every variable ranges over the naturals $\mathbb N=\{1,2,3,\dots\}$ and $\log$ denotes the natural logarithm.
+
 
 \textbf{Homework 8-9}\\
 \textbf{Exercise 1: Growth order}
@@ -1346,7 +1376,7 @@ n!,\;
         Double exponential: for all $a>1$, $a^{n}=o(2^{2^{n}})$.
 \end{enumerate}
 
-%===========================================================
+
 \bigskip
 \textbf{Exercise 2: Basic properties of \(\mathcal O\)}
 Definition used: \(f\in\mathcal O(g)\iff\exists M>0,\,N\;\forall n\ge N:\;f(n)\le M\,g(n).\)
@@ -1377,7 +1407,7 @@ Let $f,g,h:\mathbb N\!\to\!\mathbb R_{\ge0}$ and $c>0$.
         multiply the inequality from part (3) by the positive $h(n)$.
 \end{enumerate}
 
-%===========================================================
+
 \bigskip
 \textbf{Exercise 3: Consequences for common families}
 Let $i,j,k\in\mathbb N$.
@@ -1402,7 +1432,7 @@ Let $i,j,k\in\mathbb N$.
         $\Rightarrow$ $\mathcal O(n\log n)\subseteq\mathcal O(n^{2})$.
 \end{enumerate}
 
-%===========================================================
+
 \bigskip
 \textbf{Exercise 4: Comparing classes}
 Use limits to prove containments.
@@ -1434,7 +1464,7 @@ Use limits to prove containments.
         $\Rightarrow\mathcal O(\log_{2}n)=\mathcal O(\log_{3}n)$.
 \end{enumerate}
 
-%===========================================================
+
 \bigskip
 \textbf{Exercise 5: Sorting algorithms}
 Give worst-case complexity and a rationale.
@@ -1461,16 +1491,12 @@ Give worst-case complexity and a rationale.
 \end{enumerate}
 \textbf{Questions: } 1. Are there any \emph{real} problems whose best algorithm runs in about $n^{\log n}$ time sitting between polynomial and exponential or is that gap still empty?  2. If I encode a graph super-bloated (unary weights, lots of repeats), does Kruskal suddenly stop being ``poly-time'' on a Turing machine? How much can encoding choice mess with our ``this problem is in~P'' claims?
 
-\subsection{\textbf{Week 10}}\\
-\textbf{Lecture Summary}\\
-TBD
-
 %===========================================================
-\bigskip
-\textbf{Homework 10--11}
+\subsection{Week 10}\\
+\textbf{Lecture Summary}\\
+Introduced time‐complexity classes P and NP, decision problems, and polynomial‐time reductions.  Defined NP‐completeness and proved SAT is NP‐complete (Cook–Levin theorem sketch).  Discussed examples (3SAT, Hamiltonian cycle) and the open P vs NP question.  Mentioned space‐complexity classes PSPACE and coNP.
 
-%-----------------------------------------------------------
-\bigskip
+\textbf{Homework 10--11}\\
 \textbf{Exercise 1: Converting formulas to CNF}
 
 Rewrite each formula in conjunctive normal form (CNF).  Show every logical equivalence used.
@@ -1504,7 +1530,7 @@ Rewrite each formula in conjunctive normal form (CNF).  Show every logical equiv
 
 \end{enumerate}
 
-%-----------------------------------------------------------
+
 \bigskip
 \textbf{Exercise 2: Satisfiability analysis}
 
@@ -1543,7 +1569,7 @@ If it is, provide a satisfying assignment; otherwise give a short proof of impos
         The contradictory requirements make $\psi_3$ \emph{unsatisfiable}.
 \end{enumerate}
 
-%-----------------------------------------------------------
+
 \bigskip
 \textbf{Exercise 3: Encoding \emph{Sudoku} in CNF}
 
@@ -1596,7 +1622,7 @@ is expressed by the following six CNFs.
   \item[$C_6$ (\emph{given clues}).]
         For every pre-filled cell $(r,c)$ with value $v_0$ add the unit clause $x_{r,c,v_0}$.
 \end{description}
-%-----------------------------------------------------------
+
 
 \medskip
 \medskip
@@ -1638,13 +1664,15 @@ These six families of clauses constitute a CNF whose models are in one-to-one co
 \bigskip
 \textbf{Questions:} 1. What is the smallest clause-count known for a complete Sudoku CNF that still lets modern SAT solvers finish each standard puzzle in under a second?
 
-\subsection*{\textbf{Week 11}}
-\textbf{Lecture Summary}\\
-TBD\\
 %===========================================================
 
+
+\subsection{Week 11}
+\textbf{Lecture Summary}\\
+Constraint satisfaction problems (CSPs) generalize SAT to variables with larger domains, constraints on tuples, and optimization objectives.  We introduced arc‐consistency and backtracking search algorithms (MAC, AC‐3).  Sudoku was presented as a CSP instance—previewing the shift to SAT encoding next week.
+
+
 \noindent\textbf{Homework 12--13}\\
-%-----------------------------------------------------------
 \vspace{1em}
 \noindent\textbf{Exercise 1: Maximal Flow and Minimum Cut}
 In the given directed network $G$, we apply the Ford--Fulkerson algorithm to compute a maximal flow:
@@ -1679,7 +1707,6 @@ The max flow is 16, which equals the capacity of this cut. This confirms, by the
 \noindent\textbf{(3) Uniqueness of Maximum Flow.}
 Maximum flows need not be unique. For example, in our network, if we have a different flow assignment where some flow takes the path $s\to a\to c\to d\to t$ instead of $s\to a\to d\to t$, the total flow value can still be 16 units. What is unique is the minimum cut capacity, not the flow assignment. The minimum cut capacity will always equal the maximum flow value of 16, regardless of how the flow is distributed across the network's edges.
 
-%-----------------------------------------------------------
 \vspace{1em}
 \noindent\textbf{Exercise 2: Analysis of an Unknown Algorithm}
 Consider the following pseudocode:
@@ -1734,12 +1761,6 @@ Since the body executes exactly $r$ times and $r = \frac{n(n-1)(n+1)}{3} = \Thet
 \textbf{Question:} How do modern flow algorithms balance theoretical complexity with practical performance? Is it sometimes better to use a theoretically slower algorithm that performs better on real-world networks?
 
 
-%=========================================================
-
-
-
-
-
 \section{Synthesis}
 
 \subsection{Bridging Theory and Practice in Algorithm Analysis}
@@ -1781,7 +1802,59 @@ Moving forward in my computer science journey, I'll carry these insights with me
 
 
 \section{Evidence of Participation}
-TBD
+\subsection{Discord Contributions (2 pts each)}
+
+All of these posts appeared in the course's Discord \texttt{\#section-2-230pm} channel under my full name “ethan tapia”:
+
+\begin{itemize}
+  \item \textbf{2025-02-16 00:25}  
+    How can DFAs be used to model and control autonomous systems in robotics, 
+    such as navigating a predefined set of states, responding to sensor inputs, 
+    or following a scripted path within a predefined area?
+
+  \item \textbf{2025-02-23 17:16}  
+    When is converting an NFA to a DFA beneficial or detrimental in real-world 
+    applications like pattern matching?
+
+  \item \textbf{2025-03-01 16:27}  
+    In the subset construction for converting an NFA to a DFA, often there is an 
+    exponential blow-up in the number of states. Can you propose a scenario for 
+    which this blow-up actually happens, and whether there are any strategies or 
+    special cases that might mitigate this worst-case behavior?
+
+  \item \textbf{2025-03-06 16:26}  
+    Can you describe a practical scenario where combining the two (i.e.\ first designing 
+    an NFA and then converting or integrating it into a DFA) provides benefits that 
+    neither approach alone can normally offer?
+
+  \item \textbf{2025-03-30 21:53}  
+    In practice, is it always worth fully minimizing a DFA when implementing features like 
+    pattern matching or lexical analysis?
+
+  \item \textbf{2025-04-18 00:06}  
+    If we encode the step bound \(k\) in unary (1\^{}k) instead of binary, does \(L_3\) stay 
+    decidable, or does the encoding change its status?
+
+  \item \textbf{2025-04-18 00:08}  
+    For an r.e.\ language \(L\) we know \(L\) is r.e.; what about the intersection \(L\cap L\)? 
+    Is it always decidable, and how does that square with the closure properties we covered?
+
+  \item \textbf{2025-04-26 16:43}  
+    Are there any real problems whose best algorithm runs in about \(n^{\log n}\) time 
+    sitting between polynomial and exponential, or is that gap still empty? If I encode a 
+    graph super–bloated (unary weights, lots of repeats), does Kruskal suddenly stop being 
+    “poly‐time” on a Turing machine? How much can encoding choice mess with our “this 
+    problem is in P” claims?
+
+  \item \textbf{2025-05-10 02:12}  
+    What is the smallest clause‐count known for a complete Sudoku CNF that still lets modern 
+    SAT solvers finish each standard puzzle in under a second?
+
+  \item \textbf{2025-05-13 21:03}  
+    How do modern flow algorithms balance theoretical complexity with practical performance? 
+    Is it sometimes better to use a theoretically slower algorithm that performs better on 
+    real-world networks?
+\end{itemize}
 
 \section{Conclusion}\label{conclusion}
 
